@@ -1,43 +1,61 @@
-body{
-    background:#0F172A;
-    color:white;
-    font-family:Arial,sans-serif;
-    margin:0;
+/* History Table & Card Grid Styling */
+.history-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
 }
 
-nav{
-    background:#1E293B;
-    padding:20px;
-    display:flex;
-    justify-content:space-between;
+.history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
 }
 
-nav a{
-    color:white;
-    text-decoration:none;
+.history-table-wrapper {
+  overflow-x: auto;
+  border-radius: var(--radius-md);
 }
 
-.container{
-    width:90%;
-    margin:40px auto;
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.95rem;
 }
 
-table{
-    width:100%;
-    border-collapse:collapse;
-    background:#1E293B;
+.history-table th {
+  background: var(--bg-card);
+  padding: 16px 20px;
+  color: var(--text-muted);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border-glass);
 }
 
-th{
-    background:#2563EB;
-    padding:15px;
+.history-table td {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border-glass);
+  color: var(--text-secondary);
 }
 
-td{
-    padding:15px;
-    border-bottom:1px solid #334155;
+.history-table tr:hover td {
+  background: var(--bg-card-hover);
+  color: var(--text-main);
 }
 
-tr:hover{
-    background:#243447;
+.btn-icon-danger {
+  background: transparent;
+  border: none;
+  color: var(--danger);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition-fast);
+}
+
+.btn-icon-danger:hover {
+  background: rgba(239, 68, 68, 0.15);
 }

@@ -1,98 +1,73 @@
-from flask import Blueprint, request, render_template, redirect, session, url_for
-
+from flask import Blueprint, request, render_template, redirect, session, url_for, flash
 from models.user import create_user, verify_user
+from utils.helpers import sanitize_input, check_password_strength
+
+auth = Blueprint("auth", __name__)
 
 
-auth = Blueprint(
-    "auth",
-    __name__
-)
-
-
-
-@auth.route("/register", methods=["GET","POST"])
+@auth.route("/register", methods=["GET", "POST"])
 def register():
+    """
+    Handle User Registration with validation and password strength checks.
+    """
+    if "user" in session:
+        return redirect("/dashboard")
 
-    if request.method=="POST":
+    error_msg = None
 
-        name=request.form["name"]
+    if request.method == "POST":
+        name = sanitize_input(request.form.get("name", ""))
+        email = sanitize_input(request.form.get("email", "")).lower()
+        password = request.form.get("password", "")
 
-        email=request.form["email"]
+        # Password strength validation
+        strength = check_password_strength(password)
+        if strength["score"] < 40:
+            error_msg = f"Weak password: {', '.join(strength['feedback'])}"
+        else:
+            success, msg = create_user(name, email, password)
+            if success:
+                session["user"] = email
+                session["name"] = name
+                flash("Account created successfully!", "success")
+                return redirect("/dashboard")
+            else:
+                error_msg = msg
 
-        password=request.form["password"]
-
-
-        result=create_user(
-            name,
-            email,
-            password
-        )
-
-
-        if result:
-
-            return redirect(
-                url_for("auth.login")
-            )
-
-
-        return "User already exists"
-
-
-    return render_template(
-        "register.html"
-    )
+    return render_template("register.html", error=error_msg)
 
 
-
-
-
-@auth.route("/login",methods=["GET","POST"])
+@auth.route("/login", methods=["GET", "POST"])
 def login():
+    """
+    Handle User Authentication & Login Session.
+    """
+    if "user" in session:
+        return redirect("/dashboard")
 
-    if request.method=="POST":
+    error_msg = None
 
+    if request.method == "POST":
+        email = sanitize_input(request.form.get("email", "")).lower()
+        password = request.form.get("password", "")
 
-        email=request.form["email"]
-
-        password=request.form["password"]
-
-
-
-        user=verify_user(
-            email,
-            password
-        )
-
-
-
+        user = verify_user(email, password)
         if user:
+            session["user"] = user["email"]
+            session["name"] = user["name"]
+            session.permanent = True
+            return redirect("/dashboard")
+        else:
+            error_msg = "Invalid email or password. Please try again."
 
-            session["user"]=user["email"]
-
-            session["name"]=user["name"]
-
-
-            return redirect(
-                "/dashboard"
-            )
-
-
-        return "Invalid Login"
-
-
-
-    return render_template(
-        "login.html"
-    )
-
-
-
+    return render_template("login.html", error=error_msg)
 
 
 @auth.route("/logout")
 def logout():
-
+    """
+    Clear session data and redirect to landing page.
+    """
     session.clear()
-
+    flash("You have been logged out successfully.", "info")
     return redirect("/")

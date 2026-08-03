@@ -1,70 +1,92 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-
-    <title>Search History</title>
-
-    <link rel="stylesheet" href="/static/css/history.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search History | DevTrace AI</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/history.css">
 </head>
-
 <body>
 
-<nav>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="/" class="navbar-brand">
+      <i class="fas fa-microchip" style="color: var(--accent);"></i>
+      DevTrace <span>AI</span>
+    </a>
+    <div style="display: flex; gap: 12px;">
+      <a href="/dashboard" class="btn btn-secondary"><i class="fas fa-columns"></i> Dashboard</a>
+      <a href="/logout" class="btn btn-outline"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+  </nav>
 
-    <h2>DevTrace AI</h2>
+  <div class="history-container">
+    <div class="history-header">
+      <div>
+        <h1 style="font-size: 2rem;"><i class="fas fa-history" style="color: var(--accent);"></i> Search History</h1>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">View past developer identity searches associated with your account.</p>
+      </div>
+      <a href="/dashboard" class="btn btn-primary"><i class="fas fa-plus"></i> New Search</a>
+    </div>
 
-    <a href="/dashboard">Dashboard</a>
+    <div class="glass-card history-table-wrapper">
+      {% if history %}
+        <table class="history-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Developer</th>
+              <th>College</th>
+              <th>City</th>
+              <th>Search Type</th>
+              <th>Confidence</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in history %}
+              <tr id="history-row-{{ item._id }}">
+                <td style="font-size: 0.85rem; color: var(--text-muted);">{{ item.formatted_date }}</td>
+                <td style="font-weight: 700; color: var(--text-main);">{{ item.name }}</td>
+                <td>{{ item.college or 'N/A' }}</td>
+                <td>{{ item.city or 'N/A' }}</td>
+                <td><span style="font-size: 0.8rem; background: rgba(255,255,255,0.05); padding: 2px 8px; border-radius: 4px;">{{ item.search_type }}</span></td>
+                <td>
+                  <span class="badge {% if item.overall_confidence >= 80 %}badge-verified{% elif item.overall_confidence >= 50 %}badge-likely{% else %}badge-low{% endif %}">
+                    {{ item.overall_confidence }}%
+                  </span>
+                </td>
+                <td>
+                  <form action="/search" method="POST" style="display: inline;">
+                    <input type="hidden" name="name" value="{{ item.name }}">
+                    <input type="hidden" name="college" value="{{ item.college }}">
+                    <input type="hidden" name="city" value="{{ item.city }}">
+                    <input type="hidden" name="github_username" value="{{ item.github_username }}">
+                    <button type="submit" class="btn btn-outline" style="padding: 4px 10px; font-size: 0.75rem;">
+                      <i class="fas fa-redo"></i> Re-Run
+                    </button>
+                  </form>
+                  <button onclick="deleteHistoryRecord('{{ item._id }}')" class="btn-icon-danger" title="Delete Record">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <div style="padding: 60px; text-align: center;">
+          <i class="fas fa-folder-open" style="font-size: 3rem; color: var(--text-muted); margin-bottom: 16px;"></i>
+          <h3>No Search History Found</h3>
+          <p style="color: var(--text-muted); margin-top: 8px;">Perform developer identity searches from your dashboard to see records here.</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
 
-</nav>
-
-<div class="container">
-
-    <h1>Developer Search History</h1>
-
-    <table>
-
-        <tr>
-
-            <th>Name</th>
-
-            <th>College</th>
-
-            <th>City</th>
-
-            <th>Confidence</th>
-
-            <th>Platforms</th>
-
-            <th>Date</th>
-
-        </tr>
-
-        {% for item in history %}
-
-        <tr>
-
-            <td>{{ item.name }}</td>
-
-            <td>{{ item.college }}</td>
-
-            <td>{{ item.city }}</td>
-
-            <td>{{ item.overall_confidence }}%</td>
-
-            <td>{{ item.platforms_found }}/4</td>
-
-            <td>{{ item.created_at }}</td>
-
-        </tr>
-
-        {% endfor %}
-
-    </table>
-
-</div>
-
+  <script src="/static/js/search.js"></script>
 </body>
-
 </html>

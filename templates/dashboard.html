@@ -1,74 +1,166 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-
-    <title>Dashboard</title>
-
-    <link rel="stylesheet" href="/static/css/dashboard.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | DevTrace AI</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/dashboard.css">
 </head>
-
 <body>
 
-    <nav>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="/" class="navbar-brand">
+      <i class="fas fa-microchip" style="color: var(--accent);"></i>
+      DevTrace <span>AI</span>
+    </a>
+    <div style="display: flex; align-items: center; gap: 20px;">
+      <span style="color: var(--text-secondary); font-weight: 600;">
+        <i class="fas fa-user-circle" style="color: var(--accent);"></i> Welcome, {{ name or 'Developer' }}
+      </span>
+      <a href="/logout" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.85rem;">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </a>
+    </div>
+  </nav>
 
-        <h2>DevTrace AI</h2>
+  <div class="dashboard-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <ul class="sidebar-menu">
+        <li class="sidebar-item active">
+          <a href="/dashboard"><i class="fas fa-chart-line"></i> Dashboard</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="/history"><i class="fas fa-history"></i> Search History</a>
+        </li>
+        <li class="sidebar-item">
+          <a href="/#features"><i class="fas fa-cogs"></i> System Info</a>
+        </li>
+      </ul>
+      <div style="padding: 16px; background: rgba(255,255,255,0.03); border-radius: var(--radius-sm); font-size: 0.8rem; color: var(--text-muted);">
+        <i class="fas fa-shield-alt" style="color: var(--accent);"></i> DevTrace AI Engine v2.4 Active
+      </div>
+    </aside>
 
-        <a href="/logout">
-            Logout
-        </a>
-
-    </nav>
-
-    <div class="container">
-
-        <h1>Welcome {{name}}</h1>
-
-        <div class="search-box">
-
-            <h2>Developer Identity Search</h2>
-
-            <p>
-                Search a developer using their name, college, city, and optionally
-                their GitHub username for more accurate identity matching.
-            </p>
-
-            <form action="/search" method="POST">
-
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Developer Name"
-                    required>
-
-                <input
-                    type="text"
-                    name="college"
-                    placeholder="College">
-
-                <input
-                    type="text"
-                    name="city"
-                    placeholder="City">
-
-                <input
-                    type="text"
-                    name="github_username"
-                    placeholder="GitHub Username (Optional)">
-
-                <button type="submit">
-                    Search Developer
-                </button>
-
-            </form>
-
+    <!-- Main Content Area -->
+    <main class="dashboard-content">
+      
+      <!-- Metrics Overview Row -->
+      <div class="metrics-grid">
+        <div class="metric-card glass-card">
+          <div class="metric-info">
+            <h4>Total Identity Searches</h4>
+            <div class="value">{{ stats.total_searches if stats else 0 }}</div>
+          </div>
+          <div class="metric-icon"><i class="fas fa-search"></i></div>
         </div>
 
-    </div>
+        <div class="metric-card glass-card">
+          <div class="metric-info">
+            <h4>Registered Users</h4>
+            <div class="value">{{ stats.total_users if stats else 0 }}</div>
+          </div>
+          <div class="metric-icon"><i class="fas fa-users"></i></div>
+        </div>
 
-    <script src="/static/js/search.js"></script>
+        <div class="metric-card glass-card">
+          <div class="metric-info">
+            <h4>Avg AI Confidence</h4>
+            <div class="value">{{ stats.avg_confidence if stats else 0.0 }}%</div>
+          </div>
+          <div class="metric-icon"><i class="fas fa-brain"></i></div>
+        </div>
+      </div>
 
+      <!-- Search Card Form -->
+      <div class="search-box-card glass-card">
+        <div style="margin-bottom: 20px;">
+          <h2 style="font-size: 1.5rem; margin-bottom: 6px;"><i class="fas fa-search-location" style="color: var(--accent);"></i> Developer Identity Search Engine</h2>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">
+            Search a developer using their Name, College, City, or direct GitHub Username. The AI matching engine will cross-reference candidate profiles across all 4 developer platforms.
+          </p>
+        </div>
+
+        <form action="/search" method="POST" id="searchForm">
+          <div class="search-grid">
+            <div class="form-group">
+              <label class="form-label">Developer Full Name *</label>
+              <input type="text" name="name" class="form-input" placeholder="e.g. Linus Torvalds">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">College / Institution</label>
+              <input type="text" name="college" class="form-input" placeholder="e.g. Stanford University">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">City / Location</label>
+              <input type="text" name="city" class="form-input" placeholder="e.g. San Francisco">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">GitHub Username (Optional)</label>
+              <input type="text" name="github_username" class="form-input" placeholder="e.g. torvalds">
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="searchBtn" style="padding: 14px 32px; font-size: 1rem; margin-top: 10px;">
+            <i class="fas fa-bolt"></i> Initiate AI Identity Discovery
+          </button>
+        </form>
+      </div>
+
+      <!-- Recent Searches & Chart Row -->
+      <div class="charts-row">
+        <div class="glass-card" style="padding: 24px;">
+          <h3 style="font-size: 1.1rem; margin-bottom: 16px;"><i class="fas fa-history" style="color: var(--accent);"></i> Recent Identity Searches</h3>
+          {% if recent_history %}
+            <div style="overflow-x: auto;">
+              <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+                <thead>
+                  <tr style="border-bottom: 1px solid var(--border-glass); color: var(--text-muted);">
+                    <th style="padding: 10px;">Developer</th>
+                    <th style="padding: 10px;">Type</th>
+                    <th style="padding: 10px;">Confidence</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for item in recent_history %}
+                    <tr style="border-bottom: 1px solid var(--border-glass);">
+                      <td style="padding: 12px 10px; font-weight: 600;">{{ item.name }}</td>
+                      <td style="padding: 12px 10px; color: var(--text-muted);">{{ item.search_type }}</td>
+                      <td style="padding: 12px 10px;">
+                        <span class="badge {% if item.overall_confidence >= 80 %}badge-verified{% elif item.overall_confidence >= 50 %}badge-likely{% else %}badge-low{% endif %}">
+                          {{ item.overall_confidence }}%
+                        </span>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <p style="color: var(--text-muted); font-size: 0.9rem;">No search history recorded yet. Perform your first identity search above!</p>
+          {% endif %}
+        </div>
+
+        <div class="chart-card glass-card">
+          <h3 style="font-size: 1.1rem; margin-bottom: 16px;"><i class="fas fa-chart-pie" style="color: var(--accent);"></i> Platform Identity Distribution</h3>
+          <div style="position: relative; height: 220px;">
+            <canvas id="platformDistributionChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="/static/js/search.js"></script>
+  <script src="/static/js/dashboard.js"></script>
 </body>
-
 </html>

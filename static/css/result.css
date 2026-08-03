@@ -1,191 +1,182 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+/* Developer Identity Report Result Styling */
+.report-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
 }
 
-body {
-    background: #0F172A;
-    color: white;
+.report-header-card {
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 30px;
 }
 
-nav {
-    background: #1E293B;
-    padding: 18px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.developer-profile-summary {
+  display: flex;
+  align-items: center;
+  gap: 24px;
 }
 
-nav h2 {
-    color: #65DCD5;
+.developer-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: var(--radius-full);
+  border: 3px solid var(--accent);
+  object-fit: cover;
+  box-shadow: 0 0 20px var(--accent-glow);
 }
 
-nav a {
-    text-decoration: none;
-    color: white;
-    background: #2563EB;
-    padding: 10px 18px;
-    border-radius: 8px;
-    transition: 0.3s;
+.developer-details h1 {
+  font-size: 2.2rem;
+  margin-bottom: 4px;
 }
 
-nav a:hover {
-    background: #1D4ED8;
+.developer-details p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
-.container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 40px auto;
+/* Confidence Gauge Gauge */
+.confidence-gauge-box {
+  text-align: center;
+  min-width: 140px;
 }
 
-.report-header {
-    text-align: center;
-    margin-bottom: 30px;
+.gauge-circle {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 10px;
 }
 
-.report-header h1 {
-    color: #65DCD5;
-    margin-bottom: 10px;
+.gauge-circle svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
 }
 
-.overall-card {
-    background: #1E293B;
-    border-radius: 15px;
-    padding: 25px;
-    text-align: center;
-    margin-bottom: 25px;
+.gauge-circle circle {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
 }
 
-.overall-card h1 {
-    font-size: 60px;
-    color: #65DCD5;
-    margin: 15px 0;
+.gauge-circle .bg-ring {
+  stroke: rgba(255, 255, 255, 0.08);
 }
 
-.verified,
-.likely,
-.possible,
-.low {
-    display: inline-block;
-    padding: 8px 18px;
-    border-radius: 20px;
-    font-weight: bold;
-    margin-top: 10px;
+.gauge-circle .progress-ring {
+  stroke: var(--accent);
+  stroke-dasharray: 283;
+  stroke-dashoffset: 283;
+  transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.verified {
-    background: #16A34A;
+.gauge-number {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-main);
 }
 
-.likely {
-    background: #EAB308;
-    color: black;
+/* AI Summary Section */
+.ai-summary-card {
+  padding: 28px;
+  margin-bottom: 30px;
+  border-left: 4px solid var(--accent);
 }
 
-.possible {
-    background: #F97316;
+.ai-summary-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 12px;
 }
 
-.low {
-    background: #DC2626;
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
 }
 
-.platform-status {
-    background: #1E293B;
-    padding: 20px;
-    border-radius: 15px;
-    margin-bottom: 25px;
+.tech-pill {
+  background: rgba(37, 99, 235, 0.2);
+  border: 1px solid rgba(37, 99, 235, 0.4);
+  color: #93C5FD;
+  padding: 4px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 600;
 }
 
-.platform-status ul {
-    list-style: none;
-    margin-top: 15px;
+/* Platform Cards Grid */
+.platform-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 24px;
+  margin-bottom: 30px;
 }
 
-.platform-status li {
-    padding: 8px 0;
-    font-size: 17px;
+.platform-card {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 240px;
+  position: relative;
+  overflow: hidden;
 }
 
-.card {
-    background: #1E293B;
-    border-radius: 15px;
-    padding: 25px;
-    margin-bottom: 25px;
-    transition: 0.3s;
+.platform-card.not-found {
+  opacity: 0.65;
+  border-style: dashed;
 }
 
-.card:hover {
-    transform: translateY(-5px);
+.platform-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
 }
 
-.card h2 {
-    color: #65DCD5;
-    margin-bottom: 20px;
+.platform-icon {
+  font-size: 1.8rem;
 }
 
-.avatar {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    display: block;
-    margin-bottom: 20px;
-    border: 3px solid #65DCD5;
+.platform-icon.github { color: #FFFFFF; }
+.platform-icon.linkedin { color: #0A66C2; }
+.platform-icon.leetcode { color: #FFA116; }
+.platform-icon.hackerrank { color: #2EC4B6; }
+
+/* Top Projects List */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
 }
 
-.card p {
-    margin: 10px 0;
-    line-height: 1.6;
-}
-
-.card a {
-    display: inline-block;
-    margin-top: 15px;
-    background: #2563EB;
-    color: white;
-    text-decoration: none;
-    padding: 12px 18px;
-    border-radius: 8px;
-    transition: 0.3s;
-}
-
-.card a:hover {
-    background: #1D4ED8;
-}
-
-.summary-card {
-    background: #1E293B;
-    border-radius: 15px;
-    padding: 25px;
-    margin-bottom: 40px;
-}
-
-.summary-card h2 {
-    color: #65DCD5;
-    margin-bottom: 15px;
-}
-
-.summary-card p {
-    line-height: 1.8;
+.project-card {
+  padding: 16px;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-sm);
 }
 
 @media (max-width: 768px) {
-
-    nav {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .overall-card h1 {
-        font-size: 40px;
-    }
-
-    .avatar {
-        width: 90px;
-        height: 90px;
-    }
-
+  .report-header-card { flex-direction: column; text-align: center; }
+  .developer-profile-summary { flex-direction: column; }
 }

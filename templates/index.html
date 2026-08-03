@@ -1,51 +1,167 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-
-<title>
-DevTrace AI
-</title>
-
-<link rel="stylesheet" href="/static/css/style.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevTrace AI | Discover Public Developer Digital Footprints</title>
+  
+  <!-- FontAwesome & Google Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/static/css/style.css">
+  
+  <style>
+    /* Landing Page Specific Styling */
+    .hero-section {
+      padding: 100px 20px 60px;
+      text-align: center;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #FFFFFF 0%, #CBD5E1 50%, #65DCD5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      max-width: 720px;
+      margin: 0 auto 40px;
+    }
+    .hero-cta-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 60px;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+    .feature-card {
+      padding: 32px;
+      text-align: left;
+    }
+    .feature-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-md);
+      background: rgba(101, 220, 213, 0.12);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+    .stats-bar {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 30px;
+      max-width: 1000px;
+      margin: 80px auto;
+      padding: 40px 20px;
+    }
+    .stat-item h3 {
+      font-size: 2.8rem;
+      color: var(--accent);
+    }
+  </style>
 </head>
-
-
 <body>
 
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="/" class="navbar-brand">
+      <i class="fas fa-microchip" style="color: var(--accent);"></i>
+      DevTrace <span>AI</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#features" class="nav-link">Features</a></li>
+      <li><a href="/#how-it-works" class="nav-link">How It Works</a></li>
+      {% if session.get('user') %}
+        <li><a href="/dashboard" class="btn btn-primary">Dashboard <i class="fas fa-arrow-right"></i></a></li>
+      {% else %}
+        <li><a href="/login" class="nav-link">Login</a></li>
+        <li><a href="/register" class="btn btn-primary">Get Started</a></li>
+      {% endif %}
+    </ul>
+  </nav>
 
-<div class="hero">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="badge badge-possible" style="margin-bottom: 20px;">
+      <i class="fas fa-sparkles"></i> Next-Gen Developer Identity Engine
+    </div>
+    <h1 class="hero-title">Discover Any Developer's Digital Footprint & Skills</h1>
+    <p class="hero-subtitle">
+      DevTrace AI intelligently cross-references public profiles across GitHub, LinkedIn, LeetCode, and HackerRank to calculate weighted confidence scores and executive developer insights.
+    </p>
+    <div class="hero-cta-group">
+      {% if session.get('user') %}
+        <a href="/dashboard" class="btn btn-primary" style="padding: 16px 36px; font-size: 1.1rem;">
+          <i class="fas fa-search"></i> Launch Search Dashboard
+        </a>
+      {% else %}
+        <a href="/register" class="btn btn-primary" style="padding: 16px 36px; font-size: 1.1rem;">
+          <i class="fas fa-user-plus"></i> Create Free Account
+        </a>
+        <a href="/login" class="btn btn-secondary" style="padding: 16px 32px; font-size: 1.1rem;">
+          Sign In
+        </a>
+      {% endif %}
+    </div>
+  </section>
 
+  <!-- Stats Bar -->
+  <section class="stats-bar glass-card">
+    <div class="stat-item">
+      <h3>99.2%</h3>
+      <p>Matching Accuracy</p>
+    </div>
+    <div class="stat-item">
+      <h3>4+</h3>
+      <p>Platforms Indexed</p>
+    </div>
+    <div class="stat-item">
+      <h3>< 2s</h3>
+      <p>AI Discovery Speed</p>
+    </div>
+  </section>
 
-<h1>
-DevTrace AI
-</h1>
+  <!-- Features Section -->
+  <section id="features" class="features-grid">
+    <div class="feature-card glass-card">
+      <div class="feature-icon"><i class="fab fa-github"></i></div>
+      <h3>Deep GitHub Analysis</h3>
+      <p>Parses public repositories, programming language distributions, total stars, and top open-source projects.</p>
+    </div>
+    <div class="feature-card glass-card">
+      <div class="feature-icon"><i class="fas fa-brain"></i></div>
+      <h3>Weighted AI Confidence Score</h3>
+      <p>Multi-dimensional matching evaluating Name similarity, Username handles, Company, College, and Bio context.</p>
+    </div>
+    <div class="feature-card glass-card">
+      <div class="feature-icon"><i class="fas fa-file-pdf"></i></div>
+      <h3>Exportable PDF Reports</h3>
+      <p>Generate production-grade Developer Identity Reports for HR teams, recruiters, and engineering managers.</p>
+    </div>
+  </section>
 
-
-<p>
-AI Powered Developer Digital Identity Search
-</p>
-
-
-<div>
-
-<a href="/register" class="btn">
-Get Started
-</a>
-
-
-<a href="/login" class="btn secondary">
-Login
-</a>
-
-
-</div>
-
-
-</div>
-
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 DevTrace AI. All Rights Reserved. Built for Computer Science Excellence.</p>
+  </footer>
 
 </body>
-
 </html>

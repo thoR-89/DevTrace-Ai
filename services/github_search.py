@@ -1,154 +1,96 @@
-import requests
+import sys
 import re
-
+import requests
 from config import Config
 from services.serpapi_client import SerpAPIClient
-from services.github_utils import get_github_profile
+from services.github_utils import get_github_profile, _headers
 
 GITHUB_SEARCH_API = "https://api.github.com/search/users"
 
 
-def _headers():
-
-    headers = {
-        "Accept": "application/vnd.github+json"
-    }
-
-    if Config.GITHUB_TOKEN:
-        headers["Authorization"] = f"Bearer {Config.GITHUB_TOKEN}"
-
-    return headers
-
-
 def extract_username(url):
-
-    match = re.search(r"github\.com/([^/?#]+)", url)
-
+    """
+    Extract clean GitHub username from profile or repository URLs.
+    """
+    if not url:
+        return None
+    match = re.search(r"github\.com/([a-zA-Z0-9_-]+)", url)
     if match:
-        return match.group(1)
-
+        username = match.group(1).strip()
+        # Filter out system paths
+        if username.lower() not in ["features", "topics", "collections", "trending", "pricing", "login", "signup", "about"]:
+            return username
     return None
 
 
 def search_github(name, college="", city=""):
-
+    """
+    Intelligently discover GitHub candidates by name, location, and institution keywords.
+    Deduplicates candidates and retrieves rich GitHub profile details.
+    """
     profiles = []
+    seen_usernames = set()
 
-    usernames = set()
+    clean_name = str(name).strip()
+    if not clean_name:
+        return profiles
 
-    # -------------------------------
-    # Part 1 : GitHub Search API
-    # -------------------------------
-
+    # ---------------------------------------------
+    # Method 1: GitHub REST Search API
+    # ---------------------------------------------
     try:
-
-        response = requests.get(
-            GITHUB_SEARCH_API,
-            params={
-                # "in:name" tells GitHub to match the profile's display
-                # name, not just the username/login. Without this the
-                # search almost always returns nothing for a real name.
-                "q": f"{name} in:name",
-                "per_page": 30
-            },
-            headers=_headers(),
-            timeout=15
-        )
-
-        if response.status_code != 200:
-
-            print(
-                f"GitHub Search API Error: status={response.status_code} "
-                f"body={response.text[:300]}"
-            )
-
-        else:
-
-            users = response.json().get("items", [])
-
-            print(f"GitHub Search API: {len(users)} candidate(s) found for '{name}'")
-
-            for user in users:
-
-                username = user["login"]
-
-                if username in usernames:
-                    continue
-
-                profile = get_github_profile(username)
-
-                if profile:
-
-                    profiles.append(profile)
-
-                    usernames.add(username)
-
-    except Exception as e:
-
-        print("GitHub Search Error:", e)
-
-    # -------------------------------
-    # Part 2 : SerpAPI Search
-    # -------------------------------
-
-    try:
-
-        serp = SerpAPIClient()
-
-        queries = [
-
-            f'site:github.com "{name}"',
-
-            f'site:github.com "{name}" {city}',
-
-            f'site:github.com "{name}" "{college}"',
-
-            f'site:github.com "{name}" developer',
-
-            f'site:github.com "{name}" python',
-
-            f'site:github.com "{name}" github',
-
-            f'site:github.com "{name}" computer science',
-
-            f'site:github.com "{name}" student'
+        search_queries = [
+            f"{clean_name} in:name",
+            f"{clean_name} {city}".strip(),
+            f"{clean_name} {college}".strip()
         ]
 
-        for query in queries:
-            print("\n===================================")
-            print("Searching:", query)
-            print("===================================")
-            result = serp.search(query)
-            if not result:
-                continue
-            print("Results Found:", len(result.get("organic_results", [])))
+        for q in search_queries:
+            if len(seen_usernames) >= Config.MAX_GITHUB_CANDIDATES:
+                break
 
-            if not result:
-                continue
+            response = requests.get(
+                GITHUB_SEARCH_API,
+                params={"q": q, "per_page": 10},
+                headers=_headers(),
+                timeout=10
+            )
 
-            for item in result.get("organic_results", []):
-                print(item.get("title"))
-                print(item.get("link"))
-                print("----------------")
-
-                username = extract_username(item.get("link", ""))
-
-                if not username:
-                    continue
-
-                if username in usernames:
-                    continue
-
-                profile = get_github_profile(username)
-
-                if profile:
-
-                    profiles.append(profile)
-
-                    usernames.add(username)
+            if response.status_code == 200:
+                items = response.json().get("items", [])
+                for user in items:
+                    username = user.get("login")
+                    if username and username not in seen_usernames:
+                        seen_usernames.add(username)
+                        prof = get_github_profile(username)
+                        if prof:
+                            profiles.append(prof)
+            else:
+                print(f"[!] GitHub Search API HTTP {response.status_code} for query '{q}'", file=sys.stderr)
 
     except Exception as e:
+        print(f"[!] GitHub Search API Exception: {e}", file=sys.stderr)
 
-        print("SerpAPI GitHub Error:", e)
+    # ---------------------------------------------
+    # Method 2: SerpAPI Fallback / Supplement
+    # ---------------------------------------------
+    if len(profiles) < 3 and Config.SERPAPI_KEY:
+        try:
+            serp = SerpAPIClient()
+            google_query = f'site:github.com "{clean_name}" {college} {city}'.strip()
+            result = serp.search(google_query, num_results=10)
+
+            if result:
+                for item in result.get("organic_results", []):
+                    link = item.get("link", "")
+                    username = extract_username(link)
+                    if username and username not in seen_usernames:
+                        seen_usernames.add(username)
+                        prof = get_github_profile(username)
+                        if prof:
+                            profiles.append(prof)
+
+        except Exception as e:
+            print(f"[!] GitHub SerpAPI Search Exception: {e}", file=sys.stderr)
 
     return profiles
