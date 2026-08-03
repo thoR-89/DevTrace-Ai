@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Developer Identity Report</title>
+
+    <link rel="stylesheet" href="/static/css/result.css">
+
+</head>
+
+<body>
+
+<nav>
+
+    <h2>DevTrace AI</h2>
+
+    <a href="/dashboard">New Search</a>
+
+</nav>
+
+<div class="container">
+
+    <div class="report-header">
+
+        <h1>Developer Identity Report</h1>
+
+        <h2>{{ name }}</h2>
+
+        <p><strong>College / Company:</strong> {{ college }}</p>
+
+        <p><strong>City:</strong> {{ city }}</p>
+
+    </div>
+
+    {% if error %}
+
+    <div class="overall-card">
+
+        <p>{{ error }}</p>
+
+        <a href="/dashboard" class="btn" style="display:inline-block;margin-top:15px;">
+            Try Again
+        </a>
+
+    </div>
+
+    {% else %}
+
+    <div class="overall-card">
+
+        <h2>Overall AI Confidence</h2>
+
+        <h1>{{ overall }}%</h1>
+
+        {% if overall >= 90 %}
+            <span class="verified">🟢 Verified Match</span>
+        {% elif overall >= 70 %}
+            <span class="likely">🟡 Likely Match</span>
+        {% elif overall >= 50 %}
+            <span class="possible">🟠 Possible Match</span>
+        {% else %}
+            <span class="low">🔴 Low Confidence</span>
+        {% endif %}
+
+    </div>
+
+    <div class="platform-status">
+
+        <h3>Platforms Found : {{ platforms_found }}/4</h3>
+
+        <ul>
+
+            <li>{% if github %}✅{% else %}❌{% endif %} GitHub</li>
+
+            <li>{% if linkedin %}✅{% else %}❌{% endif %} LinkedIn</li>
+
+            <li>{% if leetcode %}✅{% else %}❌{% endif %} LeetCode</li>
+
+            <li>{% if hackerrank %}✅{% else %}❌{% endif %} HackerRank</li>
+
+        </ul>
+
+    </div>
+
+    <!-- GitHub -->
+
+    {% if github %}
+
+    <div class="card">
+
+        <h2>GitHub</h2>
+
+        {% if github.avatar %}
+            <img src="{{ github.avatar }}" class="avatar">
+        {% endif %}
+
+        <p><strong>Name:</strong> {{ github.name }}</p>
+
+        <p><strong>Username:</strong> {{ github.username }}</p>
+
+        <p><strong>Followers:</strong> {{ github.followers }}</p>
+
+        <p><strong>Repositories:</strong> {{ github.repositories }}</p>
+
+        <p><strong>Location:</strong> {{ github.location }}</p>
+
+        <p><strong>Bio:</strong> {{ github.bio }}</p>
+
+        <p><strong>Confidence:</strong> {{ github.confidence }}%</p>
+
+        <a href="{{ github.profile }}" target="_blank">
+
+            View GitHub Profile
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+    <!-- LinkedIn -->
+
+    {% if linkedin %}
+
+    <div class="card">
+
+        <h2>LinkedIn</h2>
+
+        <p>{{ linkedin.title }}</p>
+
+        <p><strong>Confidence:</strong> {{ linkedin.confidence }}%</p>
+
+        <a href="{{ linkedin.link }}" target="_blank">
+
+            Open LinkedIn
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+    <!-- LeetCode -->
+
+    {% if leetcode %}
+
+    <div class="card">
+
+        <h2>LeetCode</h2>
+
+        <p>{{ leetcode.title }}</p>
+
+        <p><strong>Confidence:</strong> {{ leetcode.confidence }}%</p>
+
+        <a href="{{ leetcode.link }}" target="_blank">
+
+            Open LeetCode
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+    <!-- HackerRank -->
+
+    {% if hackerrank %}
+
+    <div class="card">
+
+        <h2>HackerRank</h2>
+
+        <p>{{ hackerrank.title }}</p>
+
+        <p><strong>Confidence:</strong> {{ hackerrank.confidence }}%</p>
+
+        <a href="{{ hackerrank.link }}" target="_blank">
+
+            Open HackerRank
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+    <div class="summary-card">
+
+        <h2>AI Summary</h2>
+
+        <p>
+
+            This identity report is generated using publicly available
+            developer profiles across GitHub, LinkedIn, LeetCode,
+            and HackerRank.
+
+            The AI Confidence Score is calculated by comparing the
+            entered Name, College, City, and profile information
+            available on each platform.
+
+        </p>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+
+</html>

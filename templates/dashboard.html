@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+
+</head>
+
+<body>
+
+    <nav>
+
+        <h2>DevTrace AI</h2>
+
+        <a href="/logout">
+            Logout
+        </a>
+
+    </nav>
+
+    <div class="container">
+
+        <h1>Welcome {{name}}</h1>
+
+        <div class="search-box">
+
+            <h2>Developer Identity Search</h2>
+
+            <p>
+                Search a developer using their name, college, city, and optionally
+                their GitHub username for more accurate identity matching.
+            </p>
+
+            <form action="/search" method="POST">
+
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Developer Name"
+                    required>
+
+                <input
+                    type="text"
+                    name="college"
+                    placeholder="College">
+
+                <input
+                    type="text"
+                    name="city"
+                    placeholder="City">
+
+                <input
+                    type="text"
+                    name="github_username"
+                    placeholder="GitHub Username (Optional)">
+
+                <button type="submit">
+                    Search Developer
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <script src="/static/js/search.js"></script>
+
+</body>
+
+</html>

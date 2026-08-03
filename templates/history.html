@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Search History</title>
+
+    <link rel="stylesheet" href="/static/css/history.css">
+
+</head>
+
+<body>
+
+<nav>
+
+    <h2>DevTrace AI</h2>
+
+    <a href="/dashboard">Dashboard</a>
+
+</nav>
+
+<div class="container">
+
+    <h1>Developer Search History</h1>
+
+    <table>
+
+        <tr>
+
+            <th>Name</th>
+
+            <th>College</th>
+
+            <th>City</th>
+
+            <th>Confidence</th>
+
+            <th>Platforms</th>
+
+            <th>Date</th>
+
+        </tr>
+
+        {% for item in history %}
+
+        <tr>
+
+            <td>{{ item.name }}</td>
+
+            <td>{{ item.college }}</td>
+
+            <td>{{ item.city }}</td>
+
+            <td>{{ item.overall_confidence }}%</td>
+
+            <td>{{ item.platforms_found }}/4</td>
+
+            <td>{{ item.created_at }}</td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+</body>
+
+</html>

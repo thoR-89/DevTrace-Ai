@@ -1,0 +1,43 @@
+body{
+    background:#0F172A;
+    color:white;
+    font-family:Arial,sans-serif;
+    margin:0;
+}
+
+nav{
+    background:#1E293B;
+    padding:20px;
+    display:flex;
+    justify-content:space-between;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+}
+
+.container{
+    width:90%;
+    margin:40px auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:#1E293B;
+}
+
+th{
+    background:#2563EB;
+    padding:15px;
+}
+
+td{
+    padding:15px;
+    border-bottom:1px solid #334155;
+}
+
+tr:hover{
+    background:#243447;
+}

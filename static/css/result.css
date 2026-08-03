@@ -1,0 +1,191 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #0F172A;
+    color: white;
+}
+
+nav {
+    background: #1E293B;
+    padding: 18px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav h2 {
+    color: #65DCD5;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    background: #2563EB;
+    padding: 10px 18px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    background: #1D4ED8;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+}
+
+.report-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.report-header h1 {
+    color: #65DCD5;
+    margin-bottom: 10px;
+}
+
+.overall-card {
+    background: #1E293B;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.overall-card h1 {
+    font-size: 60px;
+    color: #65DCD5;
+    margin: 15px 0;
+}
+
+.verified,
+.likely,
+.possible,
+.low {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.verified {
+    background: #16A34A;
+}
+
+.likely {
+    background: #EAB308;
+    color: black;
+}
+
+.possible {
+    background: #F97316;
+}
+
+.low {
+    background: #DC2626;
+}
+
+.platform-status {
+    background: #1E293B;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+}
+
+.platform-status ul {
+    list-style: none;
+    margin-top: 15px;
+}
+
+.platform-status li {
+    padding: 8px 0;
+    font-size: 17px;
+}
+
+.card {
+    background: #1E293B;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h2 {
+    color: #65DCD5;
+    margin-bottom: 20px;
+}
+
+.avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: block;
+    margin-bottom: 20px;
+    border: 3px solid #65DCD5;
+}
+
+.card p {
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
+.card a {
+    display: inline-block;
+    margin-top: 15px;
+    background: #2563EB;
+    color: white;
+    text-decoration: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.card a:hover {
+    background: #1D4ED8;
+}
+
+.summary-card {
+    background: #1E293B;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 40px;
+}
+
+.summary-card h2 {
+    color: #65DCD5;
+    margin-bottom: 15px;
+}
+
+.summary-card p {
+    line-height: 1.8;
+}
+
+@media (max-width: 768px) {
+
+    nav {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .overall-card h1 {
+        font-size: 40px;
+    }
+
+    .avatar {
+        width: 90px;
+        height: 90px;
+    }
+
+}
