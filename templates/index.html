@@ -3,164 +3,464 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DevTrace AI | Discover Public Developer Digital Footprints</title>
-  
-  <!-- FontAwesome & Google Fonts -->
+  <title>DevTrace AI | Discover Any Developer's Digital Footprint</title>
+  <meta name="description" content="DevTrace AI intelligently cross-references public profiles across GitHub, LinkedIn, LeetCode, and HackerRank to calculate weighted confidence scores and executive developer insights.">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="/static/css/style.css">
-  
+
   <style>
-    /* Landing Page Specific Styling */
+    /* ===== HERO SECTION ===== */
     .hero-section {
-      padding: 100px 20px 60px;
+      padding: 110px 20px 80px;
       text-align: center;
-      max-width: 1000px;
+      max-width: 900px;
       margin: 0 auto;
     }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 18px;
+      background: rgba(101,220,213,0.08);
+      border: 1px solid rgba(101,220,213,0.22);
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      margin-bottom: 28px;
+      animation: fadeUp 0.5s ease both;
+    }
+    .hero-badge i { font-size: 0.75rem; }
+
     .hero-title {
-      font-size: 3.5rem;
+      font-size: clamp(2.8rem, 6vw, 4.2rem);
       font-weight: 800;
-      line-height: 1.15;
-      margin-bottom: 20px;
-      background: linear-gradient(135deg, #FFFFFF 0%, #CBD5E1 50%, #65DCD5 100%);
+      line-height: 1.1;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #FFFFFF 0%, #CBD5E1 45%, #65DCD5 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeUp 0.55s ease 0.08s both;
     }
+
     .hero-subtitle {
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       color: var(--text-secondary);
-      max-width: 720px;
-      margin: 0 auto 40px;
+      max-width: 680px;
+      margin: 0 auto 44px;
+      line-height: 1.75;
+      animation: fadeUp 0.6s ease 0.15s both;
     }
+
     .hero-cta-group {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 16px;
-      margin-bottom: 60px;
+      flex-wrap: wrap;
+      margin-bottom: 72px;
+      animation: fadeUp 0.65s ease 0.22s both;
     }
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-      max-width: 1200px;
-      margin: 60px auto;
-      padding: 0 20px;
+
+    .hero-cta-primary {
+      padding: 16px 40px;
+      font-size: 1.05rem;
+      border-radius: 12px;
     }
-    .feature-card {
-      padding: 32px;
-      text-align: left;
+    .hero-cta-secondary {
+      padding: 16px 36px;
+      font-size: 1.05rem;
     }
-    .feature-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: var(--radius-md);
-      background: rgba(101, 220, 213, 0.12);
-      color: var(--accent);
+
+    /* ===== PLATFORM LOGOS ROW ===== */
+    .platforms-row {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
-      margin-bottom: 20px;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-bottom: 90px;
+      animation: fadeUp 0.7s ease 0.3s both;
     }
+    .platforms-row .plat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-right: 8px;
+    }
+    .platform-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border-glass);
+      border-radius: 10px;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+      transition: var(--transition-fast);
+    }
+    .platform-logo:hover {
+      border-color: var(--border-glow);
+      color: var(--text-main);
+      background: rgba(101,220,213,0.05);
+      transform: translateY(-2px);
+    }
+    .platform-logo i { font-size: 1.1rem; }
+    .platform-logo .gh  { color: #fff; }
+    .platform-logo .li  { color: #0A66C2; }
+    .platform-logo .lc  { color: #FFA116; }
+    .platform-logo .hr  { color: #2EC4B6; }
+
+    /* ===== STATS BAR ===== */
     .stats-bar {
       display: flex;
       justify-content: space-around;
       flex-wrap: wrap;
       gap: 30px;
-      max-width: 1000px;
-      margin: 80px auto;
-      padding: 40px 20px;
+      max-width: 900px;
+      margin: 0 auto 100px;
+      padding: 40px 40px;
+      animation: fadeUp 0.7s ease 0.35s both;
     }
-    .stat-item h3 {
+    .stat-item {
+      text-align: center;
+    }
+    .stat-item .stat-num {
+      font-family: var(--font-heading);
       font-size: 2.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), #A5F3FC);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+      line-height: 1;
+    }
+    .stat-item p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-top: 8px;
+      font-weight: 500;
+    }
+
+    /* ===== SECTION HEADINGS ===== */
+    .section-heading {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .section-heading .section-tag {
+      display: inline-block;
+      padding: 5px 16px;
+      background: rgba(101,220,213,0.08);
+      border: 1px solid rgba(101,220,213,0.2);
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
       color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .section-heading h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      margin-bottom: 14px;
+    }
+    .section-heading p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 580px;
+      margin: 0 auto;
+    }
+
+    /* ===== FEATURES GRID ===== */
+    .features-section {
+      max-width: 1200px;
+      margin: 0 auto 100px;
+      padding: 0 24px;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .feature-card {
+      padding: 36px;
+      text-align: left;
+    }
+    .feature-card:nth-child(1) { animation: fadeUp 0.6s ease 0.1s both; }
+    .feature-card:nth-child(2) { animation: fadeUp 0.6s ease 0.2s both; }
+    .feature-card:nth-child(3) { animation: fadeUp 0.6s ease 0.3s both; }
+    .feature-card:nth-child(4) { animation: fadeUp 0.6s ease 0.4s both; }
+    .feature-card:nth-child(5) { animation: fadeUp 0.6s ease 0.5s both; }
+    .feature-card:nth-child(6) { animation: fadeUp 0.6s ease 0.6s both; }
+
+    .feature-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: rgba(101,220,213,0.1);
+      border: 1px solid rgba(101,220,213,0.2);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 22px;
+      transition: var(--transition-fast);
+    }
+    .feature-card:hover .feature-icon {
+      background: rgba(101,220,213,0.18);
+      box-shadow: 0 0 20px rgba(101,220,213,0.25);
+    }
+    .feature-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    .how-section {
+      max-width: 1100px;
+      margin: 0 auto 100px;
+      padding: 0 24px;
+    }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 32px;
+      position: relative;
+    }
+    .step-card {
+      text-align: center;
+      padding: 36px 24px;
+      position: relative;
+    }
+    .step-number {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(101,220,213,0.2), rgba(37,99,235,0.2));
+      border: 2px solid rgba(101,220,213,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin: 0 auto 20px;
+    }
+    .step-card h3 {
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+    .step-card p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ===== CTA SECTION ===== */
+    .cta-section {
+      max-width: 740px;
+      margin: 0 auto 60px;
+      padding: 60px 40px;
+      text-align: center;
+    }
+    .cta-section h2 {
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+    }
+    .cta-section p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 36px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Navigation Bar -->
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+    <p class="loading-text">Analyzing Developer Profiles</p>
+    <div class="loading-dots">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <!-- Navbar -->
   <nav class="navbar">
     <a href="/" class="navbar-brand">
-      <i class="fas fa-microchip" style="color: var(--accent);"></i>
+      <i class="fas fa-microchip"></i>
       DevTrace <span>AI</span>
     </a>
     <ul class="nav-links">
       <li><a href="/#features" class="nav-link">Features</a></li>
       <li><a href="/#how-it-works" class="nav-link">How It Works</a></li>
       {% if session.get('user') %}
-        <li><a href="/dashboard" class="btn btn-primary">Dashboard <i class="fas fa-arrow-right"></i></a></li>
+        <li><a href="/dashboard" class="btn btn-primary" style="padding:10px 22px;">Dashboard <i class="fas fa-arrow-right"></i></a></li>
       {% else %}
         <li><a href="/login" class="nav-link">Login</a></li>
-        <li><a href="/register" class="btn btn-primary">Get Started</a></li>
+        <li><a href="/register" class="btn btn-primary" style="padding:10px 22px;">Get Started Free</a></li>
       {% endif %}
     </ul>
   </nav>
 
-  <!-- Hero Section -->
+  <!-- ===== HERO ===== -->
   <section class="hero-section">
-    <div class="badge badge-possible" style="margin-bottom: 20px;">
-      <i class="fas fa-sparkles"></i> Next-Gen Developer Identity Engine
+    <div class="hero-badge">
+      <i class="fas fa-bolt"></i> Next-Gen Developer Identity Engine
     </div>
     <h1 class="hero-title">Discover Any Developer's Digital Footprint & Skills</h1>
     <p class="hero-subtitle">
-      DevTrace AI intelligently cross-references public profiles across GitHub, LinkedIn, LeetCode, and HackerRank to calculate weighted confidence scores and executive developer insights.
+      DevTrace AI intelligently cross-references public profiles across GitHub, LinkedIn, LeetCode, and HackerRank — delivering weighted AI confidence scores and executive developer insights in seconds.
     </p>
     <div class="hero-cta-group">
       {% if session.get('user') %}
-        <a href="/dashboard" class="btn btn-primary" style="padding: 16px 36px; font-size: 1.1rem;">
+        <a href="/dashboard" class="btn btn-primary hero-cta-primary">
           <i class="fas fa-search"></i> Launch Search Dashboard
         </a>
       {% else %}
-        <a href="/register" class="btn btn-primary" style="padding: 16px 36px; font-size: 1.1rem;">
+        <a href="/register" class="btn btn-primary hero-cta-primary">
           <i class="fas fa-user-plus"></i> Create Free Account
         </a>
-        <a href="/login" class="btn btn-secondary" style="padding: 16px 32px; font-size: 1.1rem;">
+        <a href="/login" class="btn btn-secondary hero-cta-secondary">
           Sign In
         </a>
       {% endif %}
     </div>
   </section>
 
+  <!-- Platform Logos -->
+  <div class="platforms-row">
+    <span class="plat-label">Searches across</span>
+    <div class="platform-logo"><i class="fab fa-github gh"></i> GitHub</div>
+    <div class="platform-logo"><i class="fab fa-linkedin li"></i> LinkedIn</div>
+    <div class="platform-logo"><i class="fas fa-code lc" style="color:#FFA116;"></i> LeetCode</div>
+    <div class="platform-logo"><i class="fas fa-laptop-code hr" style="color:#2EC4B6;"></i> HackerRank</div>
+  </div>
+
   <!-- Stats Bar -->
   <section class="stats-bar glass-card">
     <div class="stat-item">
-      <h3>99.2%</h3>
-      <p>Matching Accuracy</p>
+      <span class="stat-num" data-target="99.2">0</span>
+      <p>% Matching Accuracy</p>
     </div>
     <div class="stat-item">
-      <h3>4+</h3>
+      <span class="stat-num">4+</span>
       <p>Platforms Indexed</p>
     </div>
     <div class="stat-item">
-      <h3>< 2s</h3>
+      <span class="stat-num">&lt;2s</span>
       <p>AI Discovery Speed</p>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">100%</span>
+      <p>Public Data Only</p>
     </div>
   </section>
 
-  <!-- Features Section -->
-  <section id="features" class="features-grid">
-    <div class="feature-card glass-card">
-      <div class="feature-icon"><i class="fab fa-github"></i></div>
-      <h3>Deep GitHub Analysis</h3>
-      <p>Parses public repositories, programming language distributions, total stars, and top open-source projects.</p>
+  <!-- ===== FEATURES ===== -->
+  <section id="features" class="features-section">
+    <div class="section-heading">
+      <span class="section-tag">Platform Features</span>
+      <h2>Everything You Need to Identify Developers</h2>
+      <p>Comprehensive AI-powered discovery tools built for recruiters, engineering managers, and HR professionals.</p>
     </div>
-    <div class="feature-card glass-card">
-      <div class="feature-icon"><i class="fas fa-brain"></i></div>
-      <h3>Weighted AI Confidence Score</h3>
-      <p>Multi-dimensional matching evaluating Name similarity, Username handles, Company, College, and Bio context.</p>
-    </div>
-    <div class="feature-card glass-card">
-      <div class="feature-icon"><i class="fas fa-file-pdf"></i></div>
-      <h3>Exportable PDF Reports</h3>
-      <p>Generate production-grade Developer Identity Reports for HR teams, recruiters, and engineering managers.</p>
+    <div class="features-grid">
+      <div class="feature-card glass-card">
+        <div class="feature-icon"><i class="fab fa-github"></i></div>
+        <h3>Deep GitHub Analysis</h3>
+        <p>Parses public repositories, programming language distributions, total stars, followers, and top open-source projects with automated bio context extraction.</p>
+      </div>
+      <div class="feature-card glass-card">
+        <div class="feature-icon"><i class="fas fa-brain"></i></div>
+        <h3>Weighted AI Confidence Score</h3>
+        <p>Multi-dimensional matching evaluating Name similarity, Username handles, Company affiliations, College, and Bio context — producing a single reliable score.</p>
+      </div>
+      <div class="feature-card glass-card">
+        <div class="feature-icon"><i class="fas fa-file-pdf"></i></div>
+        <h3>Exportable PDF Reports</h3>
+        <p>Generate production-grade Developer Identity Reports for HR teams, recruiters, and engineering managers — downloadable with one click.</p>
+      </div>
+      <div class="feature-card glass-card">
+        <div class="feature-icon"><i class="fas fa-network-wired"></i></div>
+        <h3>Cross-Platform Verification</h3>
+        <p>Simultaneously searches GitHub, LinkedIn, LeetCode, and HackerRank using a single developer name, college, or city query.</p>
+      </div>
+      <div class="feature-card glass-card">
+        <div class="feature-icon"><i class="fas fa-robot"></i></div>
+        <h3>AI Executive Summary</h3>
+        <p>Automatically generated insights classify developer type, coverage, and key technology stack for fast talent evaluation.</p>
+      </div>
+      <div class="feature-card glass-card">
+        <div class="feature-icon"><i class="fas fa-history"></i></div>
+        <h3>Search History & Re-Run</h3>
+        <p>All searches are stored per account. Instantly re-run past searches with one click to check for updated profile information.</p>
+      </div>
     </div>
   </section>
+
+  <!-- ===== HOW IT WORKS ===== -->
+  <section id="how-it-works" class="how-section">
+    <div class="section-heading">
+      <span class="section-tag">How It Works</span>
+      <h2>Developer Identity in 4 Simple Steps</h2>
+      <p>From name to comprehensive profile — DevTrace AI does the heavy lifting.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card glass-card">
+        <div class="step-number">1</div>
+        <h3>Enter Developer Details</h3>
+        <p>Provide a developer's full name, college, city, or direct GitHub username.</p>
+      </div>
+      <div class="step-card glass-card">
+        <div class="step-number">2</div>
+        <h3>AI Discovers Profiles</h3>
+        <p>DevTrace AI simultaneously queries all 4 developer platforms using intelligent search strategies.</p>
+      </div>
+      <div class="step-card glass-card">
+        <div class="step-number">3</div>
+        <h3>Confidence Scoring</h3>
+        <p>A weighted matching algorithm calculates a confidence percentage for each platform result.</p>
+      </div>
+      <div class="step-card glass-card">
+        <div class="step-number">4</div>
+        <h3>Export Your Report</h3>
+        <p>Download a comprehensive PDF identity report ready for recruiter review or archive.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  {% if not session.get('user') %}
+  <section class="cta-section glass-card">
+    <h2>Ready to Trace Any Developer?</h2>
+    <p>Join DevTrace AI today and run your first identity discovery search in under 60 seconds — completely free.</p>
+    <a href="/register" class="btn btn-primary hero-cta-primary">
+      <i class="fas fa-user-plus"></i> Create Free Account
+    </a>
+  </section>
+  {% endif %}
 
   <!-- Footer -->
   <footer>
-    <p>&copy; 2026 DevTrace AI. All Rights Reserved. Built for Computer Science Excellence.</p>
+    <p>
+      &copy; 2026 <strong>DevTrace AI</strong>. All Rights Reserved. &nbsp;|&nbsp;
+      Built for Computer Science Excellence.
+    </p>
   </footer>
 
 </body>

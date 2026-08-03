@@ -1,61 +1,191 @@
-/* History Table & Card Grid Styling */
+/* ============================================================
+   HISTORY PAGE STYLES v2.0 — Card-based timeline layout
+   ============================================================ */
+
 .history-container {
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 40px auto;
-  padding: 0 20px;
+  padding: 0 24px 80px;
 }
 
-.history-header {
+/* ---- PAGE HEADER ---- */
+.history-page-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 24px;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
 }
 
-.history-table-wrapper {
-  overflow-x: auto;
-  border-radius: var(--radius-md);
+.history-page-title {
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
 }
 
-.history-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-  font-size: 0.95rem;
-}
-
-.history-table th {
-  background: var(--bg-card);
-  padding: 16px 20px;
+.history-page-sub {
+  font-size: 0.875rem;
   color: var(--text-muted);
-  font-weight: 700;
+}
+
+/* ---- STATS ROW ---- */
+.history-stats-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.history-stat-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 18px;
+  background: rgba(101,220,213,0.07);
+  border: 1px solid rgba(101,220,213,0.18);
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+.history-stat-chip i { font-size: 0.75rem; }
+
+/* ---- HISTORY CARDS GRID ---- */
+.history-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+/* ---- INDIVIDUAL HISTORY CARD ---- */
+.history-card {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: var(--transition-normal);
+}
+
+/* Card Header */
+.hcard-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hcard-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(101,220,213,0.2), rgba(37,99,235,0.25));
+  border: 1px solid rgba(101,220,213,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--accent);
+  flex-shrink: 0;
   text-transform: uppercase;
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
-  border-bottom: 1px solid var(--border-glass);
 }
 
-.history-table td {
-  padding: 18px 20px;
-  border-bottom: 1px solid var(--border-glass);
+.hcard-title-group {
+  flex: 1;
+  min-width: 0;
+}
+
+.hcard-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 2px;
+}
+
+.hcard-date {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.hcard-badge {
+  flex-shrink: 0;
+}
+
+/* Card Meta */
+.hcard-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.hcard-meta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
   color: var(--text-secondary);
+  white-space: nowrap;
+}
+.hcard-meta-chip i { color: var(--text-muted); font-size: 0.72rem; }
+
+.type-chip-colored {
+  background: rgba(37,99,235,0.1);
+  border-color: rgba(37,99,235,0.2);
+  color: #93C5FD;
+}
+.type-chip-colored i { color: #93C5FD; }
+
+/* Card Actions */
+.hcard-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.04);
 }
 
-.history-table tr:hover td {
-  background: var(--bg-card-hover);
-  color: var(--text-main);
+.hcard-rerun-btn {
+  flex: 1;
+  padding: 9px 16px;
+  font-size: 0.85rem;
+  justify-content: center;
 }
 
-.btn-icon-danger {
-  background: transparent;
-  border: none;
-  color: var(--danger);
-  cursor: pointer;
-  padding: 8px;
-  border-radius: var(--radius-sm);
-  transition: var(--transition-fast);
+/* ---- EMPTY STATE ---- */
+.history-empty {
+  padding: 80px 40px;
+  text-align: center;
+  margin-top: 20px;
+}
+.history-empty-icon {
+  font-size: 3.5rem;
+  color: var(--text-muted);
+  opacity: 0.3;
+  display: block;
+  margin-bottom: 20px;
+}
+.history-empty h3 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+.history-empty p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
 }
 
-.btn-icon-danger:hover {
-  background: rgba(239, 68, 68, 0.15);
+/* ---- RESPONSIVE ---- */
+@media (max-width: 600px) {
+  .history-page-header { flex-direction: column; align-items: flex-start; }
+  .history-cards-grid { grid-template-columns: 1fr; }
 }

@@ -34,7 +34,12 @@ def register():
             else:
                 error_msg = msg
 
-    return render_template("register.html", error=error_msg)
+    return render_template(
+        "register.html",
+        error=error_msg,
+        form_name=request.form.get("name", "") if request.method == "POST" else "",
+        form_email=request.form.get("email", "") if request.method == "POST" else ""
+    )
 
 
 @auth.route("/login", methods=["GET", "POST"])

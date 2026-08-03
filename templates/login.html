@@ -4,61 +4,119 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login | DevTrace AI</title>
-  
+  <meta name="description" content="Sign in to DevTrace AI to access your developer identity dashboard.">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="/static/css/style.css">
   <link rel="stylesheet" href="/static/css/auth.css">
 </head>
 <body>
 
-  <!-- Navigation Bar -->
-  <nav class="navbar">
-    <a href="/" class="navbar-brand">
-      <i class="fas fa-microchip" style="color: var(--accent);"></i>
-      DevTrace <span>AI</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="/" class="nav-link">Home</a></li>
-      <li><a href="/register" class="btn btn-outline">Register</a></li>
-    </ul>
-  </nav>
+  <div class="auth-page">
 
-  <div class="auth-container">
-    <div class="auth-card">
-      <div class="auth-header">
-        <h2>Welcome Back</h2>
-        <p>Sign in to access your Developer Identity Dashboard</p>
+    <!-- ===== LEFT BRANDING PANEL ===== -->
+    <aside class="auth-brand-panel">
+      <div class="auth-brand-logo">
+        <i class="fas fa-microchip"></i>
+        DevTrace <span>AI</span>
       </div>
 
-      {% if error %}
-        <div class="alert-error">
-          <i class="fas fa-exclamation-triangle"></i> {{ error }}
-        </div>
-      {% endif %}
+      <h1 class="auth-brand-headline">Welcome Back to DevTrace AI</h1>
+      <p class="auth-brand-sub">
+        Sign in to access your developer identity dashboard and run intelligent cross-platform identity discovery searches.
+      </p>
 
-      <form action="/login" method="POST">
-        <div class="form-group">
-          <label class="form-label">Email Address</label>
-          <input type="email" name="email" class="form-input" placeholder="developer@example.com" required autocomplete="email">
-        </div>
+      <ul class="auth-features-list">
+        <li>
+          <span class="feat-icon"><i class="fas fa-history"></i></span>
+          View all past identity search records
+        </li>
+        <li>
+          <span class="feat-icon"><i class="fas fa-chart-line"></i></span>
+          Analytics dashboard with confidence trends
+        </li>
+        <li>
+          <span class="feat-icon"><i class="fas fa-bolt"></i></span>
+          Re-run searches instantly from history
+        </li>
+        <li>
+          <span class="feat-icon"><i class="fas fa-shield-alt"></i></span>
+          Secure session with encrypted credentials
+        </li>
+      </ul>
 
-        <div class="form-group">
-          <label class="form-label">Password</label>
-          <div class="password-wrapper">
-            <input type="password" name="password" id="passwordInput" class="form-input" placeholder="••••••••" required>
-            <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+      <div class="auth-stats-row">
+        <div class="auth-stat">
+          <span class="stat-num">99.2%</span>
+          <span class="stat-label">Accuracy</span>
+        </div>
+        <div class="auth-stat">
+          <span class="stat-num">4+</span>
+          <span class="stat-label">Platforms</span>
+        </div>
+        <div class="auth-stat">
+          <span class="stat-num">&lt;2s</span>
+          <span class="stat-label">AI Speed</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ===== RIGHT FORM PANEL ===== -->
+    <main class="auth-form-panel">
+      <div class="auth-card">
+        <div class="auth-card-inner">
+
+          <!-- Header -->
+          <div class="auth-header">
+            <div class="auth-icon"><i class="fas fa-sign-in-alt"></i></div>
+            <h2>Welcome Back</h2>
+            <p>Sign in to access your Developer Identity Dashboard</p>
           </div>
+
+          <!-- Error Alert -->
+          {% if error %}
+            <div class="alert-error">
+              <i class="fas fa-exclamation-triangle"></i> {{ error }}
+            </div>
+          {% endif %}
+
+          <!-- Login Form -->
+          <form action="/login" method="POST" id="loginForm">
+            <div class="form-group">
+              <label class="form-label" for="loginEmail">Email Address</label>
+              <div class="form-input-icon-wrap">
+                <i class="fas fa-envelope input-icon"></i>
+                <input type="email" id="loginEmail" name="email" class="form-input"
+                       placeholder="developer@example.com"
+                       required autocomplete="email">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="passwordInput">Password</label>
+              <div class="password-wrapper">
+                <div class="form-input-icon-wrap">
+                  <i class="fas fa-lock input-icon"></i>
+                  <input type="password" name="password" id="passwordInput"
+                         class="form-input" placeholder="••••••••" required>
+                </div>
+                <i class="fas fa-eye toggle-password" id="togglePassword" style="right:16px; left:auto;"></i>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary auth-submit-btn" id="loginBtn">
+              <i class="fas fa-sign-in-alt"></i> Sign In to Account
+            </button>
+          </form>
+
+          <div class="auth-footer">
+            Don't have an account? <a href="/register">Create One Free</a>
+          </div>
+
         </div>
-
-        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
-          <i class="fas fa-sign-in-alt"></i> Sign In to Account
-        </button>
-      </form>
-
-      <div class="auth-footer">
-        <p>Don't have an account? <a href="/register">Create One</a></p>
       </div>
-    </div>
+    </main>
+
   </div>
 
   <script src="/static/js/login.js"></script>

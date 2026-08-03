@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard | DevTrace AI</title>
-  
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="/static/css/style.css">
@@ -12,129 +12,212 @@
 </head>
 <body>
 
-  <!-- Navigation Bar -->
+  <!-- Full-screen loading overlay (shown during search) -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+    <p class="loading-text">Running AI Identity Discovery</p>
+    <div class="loading-dots">
+      <span></span><span></span><span></span>
+    </div>
+    <p style="font-size:0.8rem; color:var(--text-muted); margin-top: 8px;">Searching GitHub · LinkedIn · LeetCode · HackerRank</p>
+  </div>
+
+  <!-- Navbar -->
   <nav class="navbar">
     <a href="/" class="navbar-brand">
-      <i class="fas fa-microchip" style="color: var(--accent);"></i>
+      <i class="fas fa-microchip"></i>
       DevTrace <span>AI</span>
     </a>
-    <div style="display: flex; align-items: center; gap: 20px;">
-      <span style="color: var(--text-secondary); font-weight: 600;">
-        <i class="fas fa-user-circle" style="color: var(--accent);"></i> Welcome, {{ name or 'Developer' }}
+    <div style="display:flex; align-items:center; gap:20px;">
+      <span class="navbar-user-badge">
+        <i class="fas fa-user-circle"></i> {{ name or 'Developer' }}
       </span>
-      <a href="/logout" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.85rem;">
+      <a href="/history" class="btn btn-secondary" style="padding:9px 18px; font-size:0.85rem;">
+        <i class="fas fa-history"></i> History
+      </a>
+      <a href="/logout" class="btn btn-outline" style="padding:9px 18px; font-size:0.85rem;">
         <i class="fas fa-sign-out-alt"></i> Logout
       </a>
     </div>
   </nav>
 
   <div class="dashboard-layout">
+
     <!-- Sidebar -->
     <aside class="sidebar">
-      <ul class="sidebar-menu">
-        <li class="sidebar-item active">
-          <a href="/dashboard"><i class="fas fa-chart-line"></i> Dashboard</a>
-        </li>
-        <li class="sidebar-item">
-          <a href="/history"><i class="fas fa-history"></i> Search History</a>
-        </li>
-        <li class="sidebar-item">
-          <a href="/#features"><i class="fas fa-cogs"></i> System Info</a>
-        </li>
-      </ul>
-      <div style="padding: 16px; background: rgba(255,255,255,0.03); border-radius: var(--radius-sm); font-size: 0.8rem; color: var(--text-muted);">
-        <i class="fas fa-shield-alt" style="color: var(--accent);"></i> DevTrace AI Engine v2.4 Active
+      <div>
+        <div class="sidebar-section-label">NAVIGATION</div>
+        <ul class="sidebar-menu">
+          <li class="sidebar-item active">
+            <a href="/dashboard">
+              <span class="sidebar-icon"><i class="fas fa-chart-line"></i></span>
+              Dashboard
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a href="/history">
+              <span class="sidebar-icon"><i class="fas fa-history"></i></span>
+              Search History
+            </a>
+          </li>
+        </ul>
+        <div class="sidebar-section-label" style="margin-top:28px;">PLATFORMS</div>
+        <ul class="sidebar-menu">
+          <li class="sidebar-item">
+            <a href="#" style="color:var(--text-muted); cursor:default;">
+              <span class="sidebar-icon" style="color:#fff;"><i class="fab fa-github"></i></span>
+              GitHub
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a href="#" style="color:var(--text-muted); cursor:default;">
+              <span class="sidebar-icon" style="color:#0A66C2;"><i class="fab fa-linkedin"></i></span>
+              LinkedIn
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a href="#" style="color:var(--text-muted); cursor:default;">
+              <span class="sidebar-icon" style="color:#FFA116;"><i class="fas fa-code"></i></span>
+              LeetCode
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a href="#" style="color:var(--text-muted); cursor:default;">
+              <span class="sidebar-icon" style="color:#2EC4B6;"><i class="fas fa-laptop-code"></i></span>
+              HackerRank
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="sidebar-engine-badge">
+        <i class="fas fa-shield-alt"></i> DevTrace AI Engine v2.4
+        <span class="engine-status-dot"></span>
       </div>
     </aside>
 
-    <!-- Main Content Area -->
+    <!-- Main Content -->
     <main class="dashboard-content">
-      
-      <!-- Metrics Overview Row -->
-      <div class="metrics-grid">
-        <div class="metric-card glass-card">
-          <div class="metric-info">
-            <h4>Total Identity Searches</h4>
-            <div class="value">{{ stats.total_searches if stats else 0 }}</div>
-          </div>
-          <div class="metric-icon"><i class="fas fa-search"></i></div>
-        </div>
 
-        <div class="metric-card glass-card">
-          <div class="metric-info">
-            <h4>Registered Users</h4>
-            <div class="value">{{ stats.total_users if stats else 0 }}</div>
-          </div>
-          <div class="metric-icon"><i class="fas fa-users"></i></div>
-        </div>
-
-        <div class="metric-card glass-card">
-          <div class="metric-info">
-            <h4>Avg AI Confidence</h4>
-            <div class="value">{{ stats.avg_confidence if stats else 0.0 }}%</div>
-          </div>
-          <div class="metric-icon"><i class="fas fa-brain"></i></div>
+      <!-- Page Title -->
+      <div class="page-title-row anim-fade-up">
+        <div>
+          <h1 class="page-title">Identity Dashboard</h1>
+          <p class="page-subtitle">Discover, verify, and export developer profiles across all major platforms.</p>
         </div>
       </div>
 
-      <!-- Search Card Form -->
-      <div class="search-box-card glass-card">
-        <div style="margin-bottom: 20px;">
-          <h2 style="font-size: 1.5rem; margin-bottom: 6px;"><i class="fas fa-search-location" style="color: var(--accent);"></i> Developer Identity Search Engine</h2>
-          <p style="color: var(--text-muted); font-size: 0.9rem;">
-            Search a developer using their Name, College, City, or direct GitHub Username. The AI matching engine will cross-reference candidate profiles across all 4 developer platforms.
-          </p>
+      <!-- Metrics Row -->
+      <div class="metrics-grid">
+        <div class="metric-card glass-card anim-fade-up-delay-1">
+          <div class="metric-info">
+            <h4>Total Searches</h4>
+            <div class="value" id="metricSearches">{{ stats.total_searches if stats else 0 }}</div>
+          </div>
+          <div class="metric-icon" style="background:rgba(37,99,235,0.12); color:#60A5FA;">
+            <i class="fas fa-search"></i>
+          </div>
+        </div>
+        <div class="metric-card glass-card anim-fade-up-delay-2">
+          <div class="metric-info">
+            <h4>Registered Users</h4>
+            <div class="value" id="metricUsers">{{ stats.total_users if stats else 0 }}</div>
+          </div>
+          <div class="metric-icon" style="background:rgba(124,58,237,0.12); color:#A78BFA;">
+            <i class="fas fa-users"></i>
+          </div>
+        </div>
+        <div class="metric-card glass-card anim-fade-up-delay-3">
+          <div class="metric-info">
+            <h4>Avg AI Confidence</h4>
+            <div class="value" id="metricConfidence">{{ stats.avg_confidence if stats else 0.0 }}%</div>
+          </div>
+          <div class="metric-icon" style="background:rgba(101,220,213,0.12); color:var(--accent);">
+            <i class="fas fa-brain"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search Card -->
+      <div class="search-box-card glass-card anim-fade-up">
+        <div class="search-card-header">
+          <div class="search-card-icon">
+            <i class="fas fa-search-location"></i>
+          </div>
+          <div>
+            <h2 class="search-card-title">Developer Identity Search Engine</h2>
+            <p class="search-card-sub">Search by Name, College, City, or direct GitHub Username. AI cross-references all 4 platforms.</p>
+          </div>
         </div>
 
         <form action="/search" method="POST" id="searchForm">
           <div class="search-grid">
             <div class="form-group">
-              <label class="form-label">Developer Full Name *</label>
-              <input type="text" name="name" class="form-input" placeholder="e.g. Linus Torvalds">
+              <label class="form-label" for="devName">Developer Full Name *</label>
+              <div class="form-input-icon-wrap">
+                <i class="fas fa-user input-icon"></i>
+                <input type="text" id="devName" name="name" class="form-input" placeholder="e.g. Linus Torvalds">
+              </div>
             </div>
-
             <div class="form-group">
-              <label class="form-label">College / Institution</label>
-              <input type="text" name="college" class="form-input" placeholder="e.g. Stanford University">
+              <label class="form-label" for="devCollege">College / Institution</label>
+              <div class="form-input-icon-wrap">
+                <i class="fas fa-university input-icon"></i>
+                <input type="text" id="devCollege" name="college" class="form-input" placeholder="e.g. Stanford University">
+              </div>
             </div>
-
             <div class="form-group">
-              <label class="form-label">City / Location</label>
-              <input type="text" name="city" class="form-input" placeholder="e.g. San Francisco">
+              <label class="form-label" for="devCity">City / Location</label>
+              <div class="form-input-icon-wrap">
+                <i class="fas fa-map-marker-alt input-icon"></i>
+                <input type="text" id="devCity" name="city" class="form-input" placeholder="e.g. San Francisco">
+              </div>
             </div>
-
             <div class="form-group">
-              <label class="form-label">GitHub Username (Optional)</label>
-              <input type="text" name="github_username" class="form-input" placeholder="e.g. torvalds">
+              <label class="form-label" for="devGithub">GitHub Username <span style="color:var(--text-muted); font-weight:400;">(optional)</span></label>
+              <div class="form-input-icon-wrap">
+                <i class="fab fa-github input-icon"></i>
+                <input type="text" id="devGithub" name="github_username" class="form-input" placeholder="e.g. torvalds">
+              </div>
             </div>
           </div>
 
-          <button type="submit" class="btn btn-primary" id="searchBtn" style="padding: 14px 32px; font-size: 1rem; margin-top: 10px;">
-            <i class="fas fa-bolt"></i> Initiate AI Identity Discovery
-          </button>
+          <div class="search-actions">
+            <button type="submit" class="btn btn-primary" id="searchBtn" style="padding:15px 36px; font-size:1rem;">
+              <i class="fas fa-bolt"></i> Initiate AI Identity Discovery
+            </button>
+            <p class="search-hint"><i class="fas fa-info-circle"></i> Searches are saved to your history automatically</p>
+          </div>
         </form>
       </div>
 
-      <!-- Recent Searches & Chart Row -->
+      <!-- Recent Searches + Chart -->
       <div class="charts-row">
-        <div class="glass-card" style="padding: 24px;">
-          <h3 style="font-size: 1.1rem; margin-bottom: 16px;"><i class="fas fa-history" style="color: var(--accent);"></i> Recent Identity Searches</h3>
+
+        <!-- Recent History Table -->
+        <div class="glass-card history-preview-card">
+          <div class="card-section-header">
+            <h3><i class="fas fa-history" style="color:var(--accent);"></i> Recent Searches</h3>
+            <a href="/history" class="btn btn-outline" style="padding:6px 16px; font-size:0.8rem;">View All</a>
+          </div>
           {% if recent_history %}
-            <div style="overflow-x: auto;">
-              <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+            <div style="overflow-x:auto;">
+              <table class="compact-table">
                 <thead>
-                  <tr style="border-bottom: 1px solid var(--border-glass); color: var(--text-muted);">
-                    <th style="padding: 10px;">Developer</th>
-                    <th style="padding: 10px;">Type</th>
-                    <th style="padding: 10px;">Confidence</th>
+                  <tr>
+                    <th>Developer</th>
+                    <th>Type</th>
+                    <th>Confidence</th>
                   </tr>
                 </thead>
                 <tbody>
                   {% for item in recent_history %}
-                    <tr style="border-bottom: 1px solid var(--border-glass);">
-                      <td style="padding: 12px 10px; font-weight: 600;">{{ item.name }}</td>
-                      <td style="padding: 12px 10px; color: var(--text-muted);">{{ item.search_type }}</td>
-                      <td style="padding: 12px 10px;">
+                    <tr>
+                      <td class="dev-name-cell">
+                        <span class="dev-avatar-mini">{{ item.name[0] if item.name else '?' }}</span>
+                        {{ item.name }}
+                      </td>
+                      <td><span class="type-chip">{{ item.search_type }}</span></td>
+                      <td>
                         <span class="badge {% if item.overall_confidence >= 80 %}badge-verified{% elif item.overall_confidence >= 50 %}badge-likely{% else %}badge-low{% endif %}">
                           {{ item.overall_confidence }}%
                         </span>
@@ -145,22 +228,47 @@
               </table>
             </div>
           {% else %}
-            <p style="color: var(--text-muted); font-size: 0.9rem;">No search history recorded yet. Perform your first identity search above!</p>
+            <div class="empty-state">
+              <i class="fas fa-search"></i>
+              <p>No searches yet. Run your first identity search above!</p>
+            </div>
           {% endif %}
         </div>
 
+        <!-- Chart Card -->
         <div class="chart-card glass-card">
-          <h3 style="font-size: 1.1rem; margin-bottom: 16px;"><i class="fas fa-chart-pie" style="color: var(--accent);"></i> Platform Identity Distribution</h3>
-          <div style="position: relative; height: 220px;">
-            <canvas id="platformDistributionChart"></canvas>
+          <div class="card-section-header">
+            <h3><i class="fas fa-chart-pie" style="color:var(--accent);"></i> Platform Distribution</h3>
+          </div>
+          <div style="position:relative; height:240px; display:flex; align-items:center; justify-content:center;">
+            {% if stats and (stats.platforms.github_count or stats.platforms.linkedin_count or stats.platforms.leetcode_count or stats.platforms.hackerrank_count) %}
+              <canvas id="platformDistributionChart"></canvas>
+            {% else %}
+              <div class="empty-state">
+                <i class="fas fa-chart-pie"></i>
+                <p>Chart will populate after your first search</p>
+              </div>
+            {% endif %}
           </div>
         </div>
-      </div>
 
+      </div>
     </main>
   </div>
 
   <script src="/static/js/search.js"></script>
   <script src="/static/js/dashboard.js"></script>
+
+  <!-- Pass stats to JS via Jinja so chart works without extra API call -->
+  <script>
+    window.DEVTRACE_STATS = {
+      platforms: {
+        github_count: {{ (stats.platforms.github_count if stats and stats.platforms) or 0 }},
+        linkedin_count: {{ (stats.platforms.linkedin_count if stats and stats.platforms) or 0 }},
+        leetcode_count: {{ (stats.platforms.leetcode_count if stats and stats.platforms) or 0 }},
+        hackerrank_count: {{ (stats.platforms.hackerrank_count if stats and stats.platforms) or 0 }}
+      }
+    };
+  </script>
 </body>
 </html>

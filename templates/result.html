@@ -4,62 +4,79 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Developer Identity Report | {{ name or 'Result' }}</title>
-  
+  <meta name="description" content="DevTrace AI developer identity report for {{ name or 'a developer' }}">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="/static/css/style.css">
   <link rel="stylesheet" href="/static/css/result.css">
 </head>
 <body>
 
-  <!-- Navigation Bar -->
-  <nav class="navbar">
+  <!-- Navbar -->
+  <nav class="navbar no-print">
     <a href="/" class="navbar-brand">
-      <i class="fas fa-microchip" style="color: var(--accent);"></i>
+      <i class="fas fa-microchip"></i>
       DevTrace <span>AI</span>
     </a>
-    <div class="no-print" style="display: flex; gap: 12px;">
-      <a href="/dashboard" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> New Search</a>
-      <button onclick="downloadPDFReport()" class="btn btn-primary"><i class="fas fa-file-pdf"></i> Download PDF Report</button>
+    <div style="display:flex; gap:12px; align-items:center;">
+      <a href="/dashboard" class="btn btn-secondary" style="padding:9px 18px; font-size:0.85rem;">
+        <i class="fas fa-arrow-left"></i> New Search
+      </a>
+      <button onclick="downloadPDFReport()" class="btn btn-primary" style="padding:9px 18px; font-size:0.85rem;">
+        <i class="fas fa-file-pdf"></i> Download PDF
+      </button>
     </div>
   </nav>
 
   <div class="report-container">
 
     {% if error %}
-      <div class="glass-card" style="padding: 40px; text-align: center; margin-top: 40px;">
-        <i class="fas fa-exclamation-circle" style="font-size: 3rem; color: var(--danger); margin-bottom: 16px;"></i>
+      <!-- Error State -->
+      <div class="glass-card error-state anim-fade-up">
+        <i class="fas fa-exclamation-circle error-state-icon"></i>
         <h2>Search Error</h2>
-        <p style="margin-top: 8px; color: var(--text-secondary);">{{ error }}</p>
-        <a href="/dashboard" class="btn btn-primary" style="margin-top: 20px; display: inline-flex;">Try Again</a>
+        <p>{{ error }}</p>
+        <a href="/dashboard" class="btn btn-primary" style="margin-top:24px; display:inline-flex;">
+          <i class="fas fa-arrow-left"></i> Try Again
+        </a>
       </div>
+
     {% else %}
 
-      <!-- Report Header Card -->
-      <div class="report-header-card glass-card">
+      <!-- ===== REPORT HEADER CARD ===== -->
+      <div class="report-header-card glass-card anim-fade-up">
         <div class="developer-profile-summary">
           {% if github and github.avatar %}
-            <img src="{{ github.avatar }}" alt="{{ name }}" class="developer-avatar">
+            <div class="developer-avatar-wrap">
+              <img src="{{ github.avatar }}" alt="{{ name }}" class="developer-avatar">
+              <div class="avatar-ring"></div>
+            </div>
           {% else %}
-            <div class="developer-avatar" style="background: var(--bg-card); display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--accent);">
+            <div class="developer-avatar-placeholder">
               <i class="fas fa-user-code"></i>
             </div>
           {% endif %}
 
           <div class="developer-details">
             <h1>{{ name }}</h1>
-            <p>
-              {% if college %}<span><i class="fas fa-university" style="color: var(--accent);"></i> {{ college }}</span>{% endif %}
-              {% if city %}<span><i class="fas fa-map-marker-alt" style="color: var(--accent);"></i> {{ city }}</span>{% endif %}
-            </p>
+            <div class="developer-meta">
+              {% if college %}
+                <span class="meta-chip"><i class="fas fa-university"></i> {{ college }}</span>
+              {% endif %}
+              {% if city %}
+                <span class="meta-chip"><i class="fas fa-map-marker-alt"></i> {{ city }}</span>
+              {% endif %}
+              <span class="meta-chip"><i class="fas fa-layer-group"></i> {{ platforms_found }}/4 Platforms</span>
+            </div>
           </div>
         </div>
 
-        <!-- Confidence Gauge Box -->
+        <!-- Confidence Gauge -->
         <div class="confidence-gauge-box">
           <div class="gauge-circle">
             <svg viewBox="0 0 100 100">
-              <circle class="bg-ring" cx="50" cy="50" r="45"></circle>
-              <circle class="progress-ring" cx="50" cy="50" r="45" data-confidence="{{ overall }}"></circle>
+              <circle class="bg-ring" cx="50" cy="50" r="42"></circle>
+              <circle class="progress-ring" cx="50" cy="50" r="42" data-confidence="{{ overall }}"></circle>
             </svg>
             <div class="gauge-number">{{ overall }}%</div>
           </div>
@@ -75,21 +92,26 @@
         </div>
       </div>
 
-      <!-- AI Executive Summary Card -->
+      <!-- ===== AI EXECUTIVE SUMMARY ===== -->
       {% if ai_summary %}
-        <div class="ai-summary-card glass-card">
+        <div class="ai-summary-card glass-card anim-fade-up-delay-1">
           <div class="ai-summary-header">
-            <i class="fas fa-robot"></i> DevTrace AI Executive Summary
+            <div class="ai-robot-icon">
+              <i class="fas fa-robot"></i>
+            </div>
+            <span>DevTrace AI Executive Summary</span>
           </div>
-          <p style="font-size: 1rem; color: var(--text-main); line-height: 1.6;">
-            {{ ai_summary.summary_text }}
-          </p>
+          <p class="ai-summary-text">{{ ai_summary.summary_text }}</p>
 
-          <div style="margin-top: 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-            <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">CLASSIFICATION:</span>
-            <span class="badge badge-possible">{{ ai_summary.dev_type }}</span>
-            <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; margin-left: 12px;">COVERAGE:</span>
-            <span style="font-size: 0.85rem; font-weight: 700; color: var(--accent);">{{ platforms_found }}/4 Platforms Discovered</span>
+          <div class="ai-meta-row">
+            <div class="ai-meta-item">
+              <span class="ai-meta-label">CLASSIFICATION</span>
+              <span class="badge badge-possible">{{ ai_summary.dev_type }}</span>
+            </div>
+            <div class="ai-meta-item">
+              <span class="ai-meta-label">COVERAGE</span>
+              <span class="coverage-value">{{ platforms_found }}/4 Platforms Discovered</span>
+            </div>
           </div>
 
           {% if ai_summary.top_languages %}
@@ -102,161 +124,161 @@
         </div>
       {% endif %}
 
-      <!-- Platforms Grid (GitHub, LinkedIn, LeetCode, HackerRank) -->
-      <h3 style="font-size: 1.3rem; margin-bottom: 20px;"><i class="fas fa-network-wired" style="color: var(--accent);"></i> Cross-Platform Verified Profiles</h3>
+      <!-- ===== PLATFORMS GRID ===== -->
+      <div class="platforms-section-title anim-fade-up">
+        <i class="fas fa-network-wired"></i> Cross-Platform Verified Profiles
+      </div>
 
       <div class="platform-grid">
-        
-        <!-- GitHub Card -->
+
+        <!-- GitHub -->
         {% if github %}
-          <div class="platform-card glass-card">
-            <div>
-              <div class="platform-header">
-                <span class="platform-icon github"><i class="fab fa-github"></i></span>
-                <span class="badge badge-verified">{{ github.confidence }}% Match</span>
-              </div>
-              <h4 style="font-size: 1.1rem; margin-bottom: 4px;">GitHub Profile</h4>
-              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">@{{ github.username }}</p>
+          <div class="platform-card glass-card platform-found anim-fade-up-delay-1">
+            <div class="platform-header">
+              <span class="platform-icon github"><i class="fab fa-github"></i></span>
+              <span class="badge badge-verified">{{ github.confidence }}% Match</span>
+            </div>
+            <h4 class="platform-name">GitHub Profile</h4>
+            <p class="platform-username">@{{ github.username }}</p>
 
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 16px;">
-                <div><i class="fas fa-users" style="color: var(--accent);"></i> <strong>{{ github.followers }}</strong> Followers</div>
-                <div><i class="fas fa-code-branch" style="color: var(--accent);"></i> <strong>{{ github.repositories }}</strong> Repos</div>
-                <div><i class="fas fa-star" style="color: #F59E0B;"></i> <strong>{{ github.total_stars }}</strong> Stars</div>
-                <div><i class="fas fa-map-marker-alt" style="color: var(--accent);"></i> {{ github.location or 'N/A' }}</div>
-              </div>
-
-              {% if github.bio %}
-                <p style="font-size: 0.82rem; color: var(--text-muted); font-style: italic; margin-bottom: 16px;">
-                  "{{ github.bio[:120] }}{% if github.bio|length > 120 %}...{% endif %}"
-                </p>
-              {% endif %}
+            <div class="github-stats-grid">
+              <div class="gh-stat"><i class="fas fa-users"></i> <strong>{{ github.followers }}</strong> Followers</div>
+              <div class="gh-stat"><i class="fas fa-code-branch"></i> <strong>{{ github.repositories }}</strong> Repos</div>
+              <div class="gh-stat"><i class="fas fa-star" style="color:#F59E0B;"></i> <strong>{{ github.total_stars }}</strong> Stars</div>
+              <div class="gh-stat"><i class="fas fa-map-marker-alt"></i> {{ github.location or 'N/A' }}</div>
             </div>
 
-            <a href="{{ github.profile }}" target="_blank" class="btn btn-outline" style="width: 100%;">
+            {% if github.bio %}
+              <p class="platform-bio">"{{ github.bio[:120] }}{% if github.bio|length > 120 %}...{% endif %}"</p>
+            {% endif %}
+
+            <a href="{{ github.profile }}" target="_blank" class="btn btn-outline platform-btn">
               View GitHub Profile <i class="fas fa-external-link-alt"></i>
             </a>
           </div>
         {% else %}
-          <div class="platform-card glass-card not-found">
+          <div class="platform-card glass-card platform-not-found anim-fade-up-delay-1">
             <div class="platform-header">
               <span class="platform-icon github"><i class="fab fa-github"></i></span>
               <span class="badge badge-low">Not Found</span>
             </div>
-            <h4>GitHub Profile</h4>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">No verified GitHub profile matching criteria found.</p>
+            <h4 class="platform-name">GitHub Profile</h4>
+            <div class="not-found-body">
+              <i class="fas fa-search-minus not-found-icon"></i>
+              <p>No verified GitHub profile matching the search criteria was found.</p>
+            </div>
           </div>
         {% endif %}
 
-        <!-- LinkedIn Card -->
+        <!-- LinkedIn -->
         {% if linkedin %}
-          <div class="platform-card glass-card">
-            <div>
-              <div class="platform-header">
-                <span class="platform-icon linkedin"><i class="fab fa-linkedin"></i></span>
-                <span class="badge badge-verified">{{ linkedin.confidence }}% Match</span>
-              </div>
-              <h4 style="font-size: 1.1rem; margin-bottom: 4px;">LinkedIn Profile</h4>
-              <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px;">{{ linkedin.title }}</p>
-              {% if linkedin.snippet %}
-                <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 16px;">
-                  {{ linkedin.snippet[:130] }}...
-                </p>
-              {% endif %}
+          <div class="platform-card glass-card platform-found anim-fade-up-delay-2">
+            <div class="platform-header">
+              <span class="platform-icon linkedin"><i class="fab fa-linkedin"></i></span>
+              <span class="badge badge-verified">{{ linkedin.confidence }}% Match</span>
             </div>
-            <a href="{{ linkedin.link }}" target="_blank" class="btn btn-outline" style="width: 100%;">
+            <h4 class="platform-name">LinkedIn Profile</h4>
+            <p class="platform-title">{{ linkedin.title }}</p>
+            {% if linkedin.snippet %}
+              <p class="platform-snippet">{{ linkedin.snippet[:140] }}...</p>
+            {% endif %}
+            <a href="{{ linkedin.link }}" target="_blank" class="btn btn-outline platform-btn">
               Open LinkedIn <i class="fas fa-external-link-alt"></i>
             </a>
           </div>
         {% else %}
-          <div class="platform-card glass-card not-found">
+          <div class="platform-card glass-card platform-not-found anim-fade-up-delay-2">
             <div class="platform-header">
               <span class="platform-icon linkedin"><i class="fab fa-linkedin"></i></span>
               <span class="badge badge-low">Not Found</span>
             </div>
-            <h4>LinkedIn Profile</h4>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">No public LinkedIn candidate profile indexed.</p>
+            <h4 class="platform-name">LinkedIn Profile</h4>
+            <div class="not-found-body">
+              <i class="fas fa-search-minus not-found-icon"></i>
+              <p>No public LinkedIn candidate profile indexed.</p>
+            </div>
           </div>
         {% endif %}
 
-        <!-- LeetCode Card -->
+        <!-- LeetCode -->
         {% if leetcode %}
-          <div class="platform-card glass-card">
-            <div>
-              <div class="platform-header">
-                <span class="platform-icon leetcode"><i class="fas fa-code"></i></span>
-                <span class="badge badge-verified">{{ leetcode.confidence }}% Match</span>
-              </div>
-              <h4 style="font-size: 1.1rem; margin-bottom: 4px;">LeetCode Profile</h4>
-              <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px;">{{ leetcode.title }}</p>
-              {% if leetcode.snippet %}
-                <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 16px;">
-                  {{ leetcode.snippet[:130] }}...
-                </p>
-              {% endif %}
+          <div class="platform-card glass-card platform-found anim-fade-up-delay-3">
+            <div class="platform-header">
+              <span class="platform-icon leetcode"><i class="fas fa-code"></i></span>
+              <span class="badge badge-verified">{{ leetcode.confidence }}% Match</span>
             </div>
-            <a href="{{ leetcode.link }}" target="_blank" class="btn btn-outline" style="width: 100%;">
-              Open LeetCode Profile <i class="fas fa-external-link-alt"></i>
+            <h4 class="platform-name">LeetCode Profile</h4>
+            <p class="platform-title">{{ leetcode.title }}</p>
+            {% if leetcode.snippet %}
+              <p class="platform-snippet">{{ leetcode.snippet[:140] }}...</p>
+            {% endif %}
+            <a href="{{ leetcode.link }}" target="_blank" class="btn btn-outline platform-btn">
+              Open LeetCode <i class="fas fa-external-link-alt"></i>
             </a>
           </div>
         {% else %}
-          <div class="platform-card glass-card not-found">
+          <div class="platform-card glass-card platform-not-found anim-fade-up-delay-3">
             <div class="platform-header">
               <span class="platform-icon leetcode"><i class="fas fa-code"></i></span>
               <span class="badge badge-low">Not Found</span>
             </div>
-            <h4>LeetCode Profile</h4>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">No LeetCode profile matched.</p>
+            <h4 class="platform-name">LeetCode Profile</h4>
+            <div class="not-found-body">
+              <i class="fas fa-search-minus not-found-icon"></i>
+              <p>No LeetCode profile matched the search criteria.</p>
+            </div>
           </div>
         {% endif %}
 
-        <!-- HackerRank Card -->
+        <!-- HackerRank -->
         {% if hackerrank %}
-          <div class="platform-card glass-card">
-            <div>
-              <div class="platform-header">
-                <span class="platform-icon hackerrank"><i class="fas fa-laptop-code"></i></span>
-                <span class="badge badge-verified">{{ hackerrank.confidence }}% Match</span>
-              </div>
-              <h4 style="font-size: 1.1rem; margin-bottom: 4px;">HackerRank Profile</h4>
-              <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px;">{{ hackerrank.title }}</p>
-              {% if hackerrank.snippet %}
-                <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 16px;">
-                  {{ hackerrank.snippet[:130] }}...
-                </p>
-              {% endif %}
+          <div class="platform-card glass-card platform-found anim-fade-up-delay-4">
+            <div class="platform-header">
+              <span class="platform-icon hackerrank"><i class="fas fa-laptop-code"></i></span>
+              <span class="badge badge-verified">{{ hackerrank.confidence }}% Match</span>
             </div>
-            <a href="{{ hackerrank.link }}" target="_blank" class="btn btn-outline" style="width: 100%;">
+            <h4 class="platform-name">HackerRank Profile</h4>
+            <p class="platform-title">{{ hackerrank.title }}</p>
+            {% if hackerrank.snippet %}
+              <p class="platform-snippet">{{ hackerrank.snippet[:140] }}...</p>
+            {% endif %}
+            <a href="{{ hackerrank.link }}" target="_blank" class="btn btn-outline platform-btn">
               Open HackerRank <i class="fas fa-external-link-alt"></i>
             </a>
           </div>
         {% else %}
-          <div class="platform-card glass-card not-found">
+          <div class="platform-card glass-card platform-not-found anim-fade-up-delay-4">
             <div class="platform-header">
               <span class="platform-icon hackerrank"><i class="fas fa-laptop-code"></i></span>
               <span class="badge badge-low">Not Found</span>
             </div>
-            <h4>HackerRank Profile</h4>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">No HackerRank profile matched.</p>
+            <h4 class="platform-name">HackerRank Profile</h4>
+            <div class="not-found-body">
+              <i class="fas fa-search-minus not-found-icon"></i>
+              <p>No HackerRank profile matched.</p>
+            </div>
           </div>
         {% endif %}
 
       </div>
 
-      <!-- Top Projects Showcase (GitHub) -->
+      <!-- ===== TOP PROJECTS ===== -->
       {% if github and github.top_projects %}
-        <div class="glass-card" style="padding: 28px; margin-bottom: 30px;">
-          <h3 style="font-size: 1.2rem; margin-bottom: 16px;"><i class="fas fa-folder-open" style="color: var(--accent);"></i> Featured Open Source Repositories</h3>
+        <div class="projects-section glass-card anim-fade-up">
+          <div class="projects-section-header">
+            <h3><i class="fas fa-folder-open"></i> Featured Open Source Repositories</h3>
+          </div>
           <div class="projects-grid">
             {% for proj in github.top_projects %}
               <div class="project-card">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                  <a href="{{ proj.url }}" target="_blank" style="font-weight: 700; font-size: 0.95rem; color: var(--accent);">
+                <div class="project-card-top">
+                  <a href="{{ proj.url }}" target="_blank" class="project-name">
                     <i class="fas fa-book"></i> {{ proj.name }}
                   </a>
-                  <span style="font-size: 0.8rem; color: #F59E0B;"><i class="fas fa-star"></i> {{ proj.stars }}</span>
+                  <span class="project-stars"><i class="fas fa-star"></i> {{ proj.stars }}</span>
                 </div>
-                <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 10px;">{{ proj.description }}</p>
-                <span class="tech-pill" style="font-size: 0.72rem;">{{ proj.language }}</span>
+                <p class="project-desc">{{ proj.description or 'No description available.' }}</p>
+                <span class="tech-pill" style="font-size:0.72rem;">{{ proj.language or 'Unknown' }}</span>
               </div>
             {% endfor %}
           </div>
@@ -264,7 +286,6 @@
       {% endif %}
 
     {% endif %}
-
   </div>
 
   <script src="/static/js/search.js"></script>

@@ -2,7 +2,8 @@ import re
 import sys
 import bcrypt
 from datetime import datetime
-from database.mongodb import users_collection
+from tinydb import Query
+from database.mongodb import users_table
 
 
 def is_valid_email(email):
@@ -15,10 +16,10 @@ def is_valid_email(email):
 
 def create_user(name, email, password):
     """
-    Create a new user account with secure password hashing (stored as UTF-8 string).
+    Create a new user account with secure password hashing.
     Returns (success: bool, message: str).
     """
-    clean_name = str(name).strip()
+    clean_name  = str(name).strip()
     clean_email = str(email).strip().lower()
 
     if not clean_name:
@@ -31,29 +32,29 @@ def create_user(name, email, password):
         return False, "Password must be at least 6 characters long."
 
     # Check if user already exists
-    existing_user = users_collection.find_one({"email": clean_email})
-    if existing_user:
+    Q = Query()
+    existing = users_table.search(Q.email == clean_email)
+    if existing:
         return False, "An account with this email address already exists."
 
-    # Generate salt and hash password
+    # Hash password securely
     hashed_bytes = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt(rounds=12))
-    # CRITICAL FIX: Decode hashed_bytes to UTF-8 string to prevent PyMongo BSON binary type corruption
-    hashed_password_str = hashed_bytes.decode("utf-8")
+    hashed_str   = hashed_bytes.decode("utf-8")
 
     user_document = {
-        "name": clean_name,
-        "email": clean_email,
-        "password": hashed_password_str,
-        "created_at": datetime.now(),
-        "role": "user"
+        "name":       clean_name,
+        "email":      clean_email,
+        "password":   hashed_str,
+        "created_at": datetime.now().isoformat(),
+        "role":       "user"
     }
 
     try:
-        users_collection.insert_one(user_document)
+        users_table.insert(user_document)
         return True, "Account created successfully!"
     except Exception as e:
         print(f"[X] User Creation Error: {e}", file=sys.stderr)
-        return False, "Database error creating user account."
+        return False, "Database error creating user account. Please try again."
 
 
 def verify_user(email, password):
@@ -63,15 +64,17 @@ def verify_user(email, password):
     """
     clean_email = str(email).strip().lower()
 
-    user = users_collection.find_one({"email": clean_email})
-    if not user:
+    Q = Query()
+    results = users_table.search(Q.email == clean_email)
+    if not results:
         return None
 
+    user = results[0]
     stored_password = user.get("password")
     if not stored_password:
         return None
 
-    # CRITICAL FIX: Handle stored_password if bytes or string safely
+    # Handle str or bytes
     if isinstance(stored_password, str):
         stored_bytes = stored_password.encode("utf-8")
     elif isinstance(stored_password, bytes):

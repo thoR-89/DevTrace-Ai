@@ -1,5 +1,5 @@
-from database.mongodb import get_search_history, delete_search_history_item, search_collection
-from bson.objectid import ObjectId
+from database.mongodb import get_search_history, delete_search_history_item, history_table
+from tinydb import Query
 
 
 def fetch_user_history(user_email, limit=50):
@@ -18,16 +18,16 @@ def remove_history_entry(history_id, user_email):
 
 def get_history_by_id(history_id, user_email=None):
     """
-    Fetch a single search history record by ID.
+    Fetch a single search history record by TinyDB doc_id (integer).
     """
     try:
-        query = {"_id": ObjectId(history_id)}
-        if user_email:
-            query["user_email"] = user_email
-            
-        doc = search_collection.find_one(query)
+        doc_id = int(history_id)
+        doc = history_table.get(doc_id=doc_id)
         if doc:
-            doc["_id"] = str(doc["_id"])
-        return doc
+            if user_email and doc.get("user_email") != user_email:
+                return None
+            doc["_id"] = str(doc.doc_id)
+            return doc
+        return None
     except Exception:
         return None
