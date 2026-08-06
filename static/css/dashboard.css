@@ -2,13 +2,59 @@
    DASHBOARD LAYOUT & ANALYTICS STYLING v2.0
    ============================================================ */
 
+.navbar-user-badge {
+  font-size: 1.05rem;
+}
+.sidebar-section-label {
+  font-size: 0.8rem;
+}
+.sidebar-item a {
+  font-size: 0.95rem;
+}
+.sidebar-engine-badge {
+  font-size: 0.9rem;
+}
+.page-title {
+  font-size: 2.35rem;
+}
+.page-subtitle {
+  font-size: 1rem;
+}
+.metric-info h4 {
+  font-size: 0.8rem;
+}
+.metric-info .value {
+  font-size: 2.35rem;
+}
+.search-card-title {
+  font-size: 1.7rem;
+}
+.search-card-sub {
+  font-size: 0.95rem;
+}
+.search-hint {
+  font-size: 0.9rem;
+}
+.card-section-header h3 {
+  font-size: 1.08rem;
+}
+.compact-table {
+  font-size: 0.95rem;
+}
+.compact-table th {
+  font-size: 0.78rem;
+}
+.empty-state p {
+  font-size: 0.95rem;
+}
+
 /* User badge in navbar */
 .navbar-user-badge {
   display: flex;
   align-items: center;
   gap: 8px;
   color: var(--text-secondary);
-  font-size: 0.88rem;
+  font-size: 0.99rem;
   font-weight: 600;
 }
 .navbar-user-badge i { color: var(--accent); font-size: 1.1rem; }
@@ -23,8 +69,8 @@
 .sidebar {
   width: 260px;
   flex-shrink: 0;
-  background: rgba(6, 13, 26, 0.97);
-  border-right: 1px solid var(--border-glass);
+  background: var(--bg-card);
+  border-right: 1px solid var(--border-soft);
   padding: 28px 16px;
   display: flex;
   flex-direction: column;
@@ -58,7 +104,7 @@
   gap: 12px;
   padding: 11px 14px;
   border-radius: var(--radius-sm);
-  color: var(--text-secondary);
+  color: var(--text-main);
   font-size: 0.88rem;
   font-weight: 600;
   transition: var(--transition-fast);
@@ -79,18 +125,18 @@
 }
 
 .sidebar-item a:hover {
-  background: rgba(101,220,213,0.06);
-  color: var(--accent);
+  background: var(--primary-soft);
+  color: var(--primary);
 }
 .sidebar-item a:hover .sidebar-icon {
-  background: rgba(101,220,213,0.1);
-  color: var(--accent);
+  background: var(--primary-soft);
+  color: var(--primary);
 }
 
 .sidebar-item.active a {
-  background: rgba(101,220,213,0.08);
-  color: var(--accent);
-  border: 1px solid rgba(101,220,213,0.15);
+  background: var(--primary-soft);
+  color: var(--primary);
+  border: 1px solid rgba(241,74,0,0.16);
 }
 .sidebar-item.active a::before {
   content: '';
@@ -113,14 +159,14 @@
   align-items: center;
   gap: 8px;
   padding: 12px 14px;
-  background: rgba(101,220,213,0.05);
-  border: 1px solid rgba(101,220,213,0.12);
+  background: var(--bg-muted);
+  border: 1px solid var(--border-soft);
   border-radius: var(--radius-sm);
   font-size: 0.75rem;
-  color: var(--text-muted);
+  color: var(--text-main);
   font-weight: 600;
 }
-.sidebar-engine-badge i { color: var(--accent); }
+.sidebar-engine-badge i { color: var(--primary); }
 
 .engine-status-dot {
   width: 7px; height: 7px;
@@ -211,9 +257,9 @@
 .search-card-icon {
   width: 52px; height: 52px;
   border-radius: 14px;
-  background: rgba(101,220,213,0.1);
-  border: 1px solid rgba(101,220,213,0.2);
-  color: var(--accent);
+  background: var(--primary-soft);
+  border: 1px solid rgba(241,74,0,0.16);
+  color: var(--primary);
   display: flex;
   align-items: center;
   justify-content: center;

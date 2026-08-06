@@ -21,6 +21,7 @@ def search_developer():
 
     name = sanitize_input(request.form.get("name", ""))
     college = sanitize_input(request.form.get("college", ""))
+    company = sanitize_input(request.form.get("company", ""))
     city = sanitize_input(request.form.get("city", ""))
     github_username = sanitize_input(request.form.get("github_username", ""))
 
@@ -29,61 +30,19 @@ def search_developer():
     leetcode = None
     hackerrank = None
 
-    # ---------------------------------------------
-    # Mode A: Direct GitHub Username Search
-    # ---------------------------------------------
+    github_profile = None
     if github_username:
-        github = search_by_username(github_username)
-        if github:
-            github["confidence"] = 100
-            name = github.get("name") or github_username
+        github_profile = search_by_username(github_username)
+        if github_profile:
+            github_profile["confidence"] = 100
 
-        overall = 100 if github else 0
-        platforms_found = 1 if github else 0
-
-        ai_insight = generate_ai_summary(github, None, None, None, developer_name=name)
-
-        search_record = {
-            "user_email": user_email,
-            "search_type": "GitHub Username",
-            "name": name,
-            "college": college,
-            "city": city,
-            "github_username": github_username,
-            "overall_confidence": overall,
-            "platforms_found": platforms_found,
-            "github": github,
-            "linkedin": None,
-            "leetcode": None,
-            "hackerrank": None,
-            "ai_summary": ai_insight
-        }
-        save_search_history(search_record)
-
-        return render_template(
-            "result.html",
-            name=name,
-            college=college,
-            city=city,
-            github_username=github_username,
-            github=github,
-            linkedin=None,
-            leetcode=None,
-            hackerrank=None,
-            overall=overall,
-            platforms_found=platforms_found,
-            ai_summary=ai_insight
-        )
-
-    # ---------------------------------------------
-    # Mode B: Multi-field AI Identity Search
-    # ---------------------------------------------
-    if not name:
+    if not name and not github_username:
         return render_template(
             "result.html",
             error="Please enter a Developer Name or GitHub Username.",
             name="",
             college="",
+            company="",
             city="",
             github=None,
             linkedin=None,
@@ -94,30 +53,46 @@ def search_developer():
             ai_summary=None
         )
 
-    # Trigger discovery engine across platforms
-    candidates = discover_profiles(name, college, city)
+    search_name = name or (github_profile.get("name") if github_profile else "") or github_username
+    search_college = college or ""
+    search_company = company or (github_profile.get("company") if github_profile else "") or ""
+    search_city = city or (github_profile.get("location") if github_profile else "") or ""
 
-    # Run AI Weighted Matcher for each platform
-    github = find_best_match(name, college, city, candidates.get("github", []))
-    linkedin = find_best_match(name, college, city, candidates.get("linkedin", []))
-    leetcode = find_best_match(name, college, city, candidates.get("leetcode", []))
-    hackerrank = find_best_match(name, college, city, candidates.get("hackerrank", []))
+    candidates = discover_profiles(
+        search_name,
+        search_college,
+        search_city,
+        search_company,
+        github_username=github_username,
+    )
 
-    # Calculate overall confidence score
+    github_candidates = candidates.get("github", []) or []
+    if github_profile:
+        github = github_profile
+        github["confidence"] = 100
+    elif github_candidates:
+        github = dict(github_candidates[0])
+        github["confidence"] = 100
+    else:
+        github = None
+
+    linkedin = find_best_match(search_name, search_college, search_city, candidates.get("linkedin", []), target_company=search_company)
+    leetcode = find_best_match(search_name, search_college, search_city, candidates.get("leetcode", []), target_company=search_company)
+    hackerrank = find_best_match(search_name, search_college, search_city, candidates.get("hackerrank", []), target_company=search_company)
+
     scores = [p["confidence"] for p in [github, linkedin, leetcode, hackerrank] if p is not None]
     overall = int(round(sum(scores) / len(scores))) if scores else 0
     platforms_found = len(scores)
 
-    # Generate AI executive summary & insights
     ai_insight = generate_ai_summary(github, linkedin, leetcode, hackerrank, developer_name=name)
 
-    # Save to user search history in MongoDB
     search_record = {
         "user_email": user_email,
         "search_type": "Identity Search",
-        "name": name,
-        "college": college,
-        "city": city,
+        "name": search_name,
+        "college": search_college,
+        "company": search_company,
+        "city": search_city,
         "overall_confidence": overall,
         "platforms_found": platforms_found,
         "github": github,
@@ -130,9 +105,10 @@ def search_developer():
 
     return render_template(
         "result.html",
-        name=name,
-        college=college,
-        city=city,
+        name=search_name,
+        college=search_college,
+        company=search_company,
+        city=search_city,
         github=github,
         linkedin=linkedin,
         leetcode=leetcode,

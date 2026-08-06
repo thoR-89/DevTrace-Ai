@@ -1,5 +1,4 @@
 import re
-import sys
 
 # Try importing rapidfuzz, fallback to difflib if unavailable
 try:
@@ -16,7 +15,6 @@ def normalize(text):
     """
     if not text:
         return ""
-    # Lowercase, replace non-alphanumeric with spaces, collapse whitespace
     cleaned = re.sub(r"[^a-zA-Z0-9\s]", " ", str(text).lower())
     return re.sub(r"\s+", " ", cleaned).strip()
 
@@ -35,95 +33,105 @@ def calculate_string_similarity(str1, str2):
 
     if HAS_RAPIDFUZZ:
         return float(fuzz.token_set_ratio(s1, s2))
-    else:
-        matcher = difflib.SequenceMatcher(None, s1, s2)
-        return float(matcher.ratio() * 100.0)
+    matcher = difflib.SequenceMatcher(None, s1, s2)
+    return float(matcher.ratio() * 100.0)
 
 
-def calculate_score(target_name, target_college, target_city, profile):
+def _token_overlap_score(query_text, candidate_text):
+    query_tokens = {token for token in normalize(query_text).split() if token}
+    candidate_tokens = {token for token in normalize(candidate_text).split() if token}
+    if not query_tokens or not candidate_tokens:
+        return 0.0
+    overlap = len(query_tokens & candidate_tokens)
+    return min(100.0, (overlap / max(1, len(query_tokens))) * 100.0)
+
+
+def calculate_score(target_name, target_college, target_city, profile, target_company=""):
     """
-    Multi-dimensional AI Weighted Scoring Algorithm for Candidate Validation.
-    Weights:
-    - Name Similarity: 35%
-    - Username & Handle Match: 20%
-    - Location Match: 15%
-    - College / Company Match: 15%
-    - Bio & Keyword Context Match: 10%
-    - Completeness & Social Proof: 5%
-    Total Max Score: 100%
+    Multi-dimensional AI weighted matching that rewards identity evidence across
+    name, username, college, company, city, bio, languages, topics, website,
+    and social links.
     """
     if not profile:
         return 0
 
-    score = 0.0
-
     norm_search_name = normalize(target_name)
     norm_search_college = normalize(target_college)
+    norm_search_company = normalize(target_company)
     norm_search_city = normalize(target_city)
 
-    prof_name = profile.get("name", "")
-    prof_username = profile.get("username", "")
-    prof_bio = profile.get("bio", "") or profile.get("snippet", "")
-    prof_location = profile.get("location", "")
-    prof_company = profile.get("company", "") or profile.get("title", "")
+    prof_name = profile.get("name", "") or ""
+    prof_username = profile.get("username", "") or ""
+    prof_bio = (profile.get("bio", "") or profile.get("snippet", "") or "").strip()
+    prof_location = profile.get("location", "") or ""
+    prof_company = (profile.get("company", "") or profile.get("title", "") or "").strip()
+    website = profile.get("blog") or profile.get("website") or profile.get("link") or ""
+    social_links = profile.get("social_links") or []
+    languages = profile.get("languages") or []
+    topics = profile.get("topics") or []
 
-    # 1. Name Similarity (Weight: 35)
-    name_sim = calculate_string_similarity(target_name, prof_name)
-    score += (name_sim / 100.0) * 35.0
-
-    # 2. Username Match (Weight: 20)
-    user_sim = calculate_string_similarity(target_name, prof_username)
-    # Check if name tokens exist in username
-    name_tokens = norm_search_name.split()
-    norm_user = normalize(prof_username)
-    token_bonus = sum(1 for t in name_tokens if t in norm_user)
-    token_factor = min(1.0, token_bonus / max(1, len(name_tokens)))
-    username_score = max(user_sim, token_factor * 100.0)
-    score += (username_score / 100.0) * 20.0
-
-    # 3. Location Match (Weight: 15)
-    if norm_search_city:
-        loc_sim = max(
-            calculate_string_similarity(target_city, prof_location),
-            100.0 if norm_search_city in normalize(prof_location) or norm_search_city in normalize(prof_bio) else 0.0
+    name_score = calculate_string_similarity(target_name, prof_name)
+    username_score = calculate_string_similarity(target_name, prof_username)
+    username_tokens = [token for token in norm_search_name.split() if token]
+    if username_tokens:
+        username_score = max(
+            username_score,
+            max((calculate_string_similarity(token, normalize(prof_username)) for token in username_tokens), default=0.0),
         )
-        score += (loc_sim / 100.0) * 15.0
-    else:
-        # If city not specified by user, redistribute partial score if location exists
-        if prof_location:
-            score += 10.0
 
-    # 4. College / Company Match (Weight: 15)
+    college_score = calculate_string_similarity(target_college, prof_company)
     if norm_search_college:
-        inst_sim = max(
-            calculate_string_similarity(target_college, prof_company),
-            100.0 if norm_search_college in normalize(prof_company) or norm_search_college in normalize(prof_bio) else 0.0
+        college_score = max(
+            college_score,
+            _token_overlap_score(target_college, prof_bio),
+            _token_overlap_score(target_college, prof_location),
+            _token_overlap_score(target_college, prof_company),
         )
-        score += (inst_sim / 100.0) * 15.0
-    else:
-        if prof_company:
-            score += 10.0
 
-    # 5. Bio & Context Match (Weight: 10)
+    company_score = calculate_string_similarity(target_company, prof_company)
+    if norm_search_company:
+        company_score = max(company_score, _token_overlap_score(target_company, prof_bio))
+
+    city_score = calculate_string_similarity(target_city, prof_location)
+    if norm_search_city:
+        city_score = max(city_score, _token_overlap_score(target_city, prof_bio), _token_overlap_score(target_city, prof_location))
+
+    bio_score = 0.0
     if prof_bio:
-        bio_score = 5.0
-        if any(w in normalize(prof_bio) for w in ["developer", "engineer", "software", "python", "student", "cs", "code"]):
-            bio_score += 5.0
-        score += bio_score
+        bio_context = " ".join([part for part in [target_name, target_college, target_company, target_city] if part]).strip()
+        bio_score = max(
+            calculate_string_similarity(bio_context, prof_bio),
+            _token_overlap_score(bio_context, prof_bio),
+        )
+        if any(word in normalize(prof_bio) for word in ["developer", "engineer", "software", "python", "student", "cs", "code"]):
+            bio_score = max(bio_score, 85.0)
 
-    # 6. Completeness & Social Proof (Weight: 5)
-    followers = profile.get("followers", 0)
-    repos = profile.get("repositories", 0)
-    if followers > 5 or repos > 3 or profile.get("avatar"):
-        score += 5.0
+    languages_score = 100.0 if languages else 0.0
+    topics_score = 100.0 if topics else 0.0
+    website_score = 100.0 if website else 0.0
+    social_score = 100.0 if social_links else 0.0
 
-    final_score = int(round(min(100.0, score)))
+    weighted_score = (
+        name_score * 40.0
+        + username_score * 20.0
+        + college_score * 15.0
+        + company_score * 10.0
+        + city_score * 10.0
+        + bio_score * 15.0
+        + languages_score * 10.0
+        + topics_score * 10.0
+        + website_score * 10.0
+        + social_score * 15.0
+    ) / 155.0
+
+    final_score = int(round(min(100.0, max(0.0, weighted_score))))
     return final_score
 
 
-def find_best_match(target_name, target_college, target_city, candidate_profiles):
+def find_best_match(target_name, target_college, target_city, candidate_profiles, target_company=""):
     """
-    Evaluate candidate profiles using weighted scoring and return the profile with highest confidence score.
+    Evaluate candidate profiles using weighted scoring and return the profile with
+    highest confidence score. Return None when the best score is still too weak.
     """
     if not candidate_profiles:
         return None
@@ -132,12 +140,15 @@ def find_best_match(target_name, target_college, target_city, candidate_profiles
     highest_score = -1
 
     for candidate in candidate_profiles:
-        score = calculate_score(target_name, target_college, target_city, candidate)
+        score = calculate_score(target_name, target_college, target_city, candidate, target_company=target_company)
         candidate["confidence"] = score
 
         if score > highest_score:
             highest_score = score
             best_candidate = candidate
+
+    if best_candidate is not None and highest_score < 45:
+        return None
 
     return best_candidate
 
@@ -149,14 +160,12 @@ def generate_ai_summary(github, linkedin, leetcode, hackerrank, developer_name="
     platforms_found = [p for p in [github, linkedin, leetcode, hackerrank] if p is not None]
     found_count = len(platforms_found)
 
-    # Collect languages & tech
     languages = []
     if github and github.get("languages"):
         languages = github.get("languages")
 
     top_langs_str = ", ".join(languages[:4]) if languages else "Python, JavaScript"
 
-    # Determine Developer Classification
     dev_type = "Software Engineer"
     if github and (github.get("repositories", 0) > 10 or github.get("total_stars", 0) > 5):
         dev_type = "Open Source Developer"
@@ -165,9 +174,8 @@ def generate_ai_summary(github, linkedin, leetcode, hackerrank, developer_name="
     elif linkedin:
         dev_type = "Full Stack Engineer"
 
-    # AI Summary sentence construction
     name_str = developer_name if developer_name else "This developer"
-    
+
     if found_count >= 3:
         summary_text = (
             f"Verified Digital Footprint: {name_str} demonstrates a strong multi-platform digital identity across "

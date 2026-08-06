@@ -4,7 +4,7 @@ from services.serpapi_client import SerpAPIClient
 client = SerpAPIClient()
 
 
-def search_hackerrank(name, college="", city=""):
+def search_hackerrank(name, college="", city="", company=""):
     """
     Search HackerRank candidate profiles using SerpAPI Google Search indexing.
     Extracts HackerRank handle, title, snippet information.
@@ -13,7 +13,12 @@ def search_hackerrank(name, college="", city=""):
     if not clean_name:
         return []
 
-    query = f'"{clean_name}" site:hackerrank.com/profile/ OR site:hackerrank.com/'.strip()
+    query_parts = [f'"{clean_name}"', "site:hackerrank.com/profile/ OR site:hackerrank.com/"]
+    for value in [company, college, city]:
+        if value:
+            query_parts.append(f'"{value}"')
+
+    query = " ".join(query_parts).strip()
     data = client.search(query, num_results=10)
 
     if not data:
@@ -29,7 +34,6 @@ def search_hackerrank(name, college="", city=""):
         if "hackerrank.com" not in clean_link.lower() or clean_link in seen_links:
             continue
 
-        # Skip non-profile pages like /challenges/ or /domains/
         if any(x in clean_link.lower() for x in ["/challenges/", "/domains/", "/dashboard", "/skills/"]):
             continue
 
@@ -37,7 +41,6 @@ def search_hackerrank(name, college="", city=""):
         title = result.get("title", "").replace(" - HackerRank", "").replace(" | HackerRank", "")
         snippet = result.get("snippet", "")
 
-        # Extract handle
         match = re.search(r"hackerrank\.com/(?:profile/)?([a-zA-Z0-9_-]+)", clean_link)
         username = match.group(1) if match else clean_name.lower().replace(" ", "")
 
@@ -48,7 +51,9 @@ def search_hackerrank(name, college="", city=""):
             "title": title,
             "link": clean_link,
             "snippet": snippet,
-            "bio": snippet
+            "bio": snippet,
+            "location": city,
+            "company": company,
         })
 
     return profiles

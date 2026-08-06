@@ -1,0 +1,931 @@
+{
+  "users": {
+    "1": {
+      "name": "Sunny Yadav",
+      "email": "ys3817537@gmail.com",
+      "password": "$2b$12$gxt/Mr.82nfq2NIEW93qc.nC6yoFJBIQKag1Ru1aUF85QiBbJr4De",
+      "created_at": "2026-08-04T20:12:45.575820",
+      "role": "user"
+    }
+  },
+  "search_history": {
+    "1": {
+      "user_email": "ys3817537@gmail.com",
+      "search_type": "GitHub Username",
+      "name": "Sunny Yadav",
+      "college": "Satish Pradhan Dnyansadhana College",
+      "company": "",
+      "city": "Thane",
+      "github_username": "thoR-89",
+      "overall_confidence": 100,
+      "platforms_found": 1,
+      "github": {
+        "platform": "GitHub",
+        "username": "thoR-89",
+        "name": "Sunny Yadav",
+        "bio": "Computer Science student passionate about Cybersecurity.\r\nCurrently building projects in Python and learning SOC operation",
+        "location": "Thane",
+        "company": "",
+        "blog": "",
+        "email": "",
+        "followers": 0,
+        "following": 2,
+        "repositories": 5,
+        "total_stars": 0,
+        "languages": [
+          "Python",
+          "HTML"
+        ],
+        "language_counts": {
+          "HTML": 1,
+          "Python": 3
+        },
+        "top_projects": [
+          {
+            "name": "DevTrace-Ai",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "HTML",
+            "url": "https://github.com/thoR-89/DevTrace-Ai"
+          },
+          {
+            "name": "Password-Security-Analyzer",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "Python",
+            "url": "https://github.com/thoR-89/Password-Security-Analyzer"
+          },
+          {
+            "name": "phishing-detector",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "Python",
+            "url": "https://github.com/thoR-89/phishing-detector"
+          },
+          {
+            "name": "SOC-Automation-Dashboard",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "Python",
+            "url": "https://github.com/thoR-89/SOC-Automation-Dashboard"
+          },
+          {
+            "name": "Filler",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "Other",
+            "url": "https://github.com/thoR-89/Filler"
+          }
+        ],
+        "avatar": "https://avatars.githubusercontent.com/u/195302081?v=4",
+        "profile": "https://github.com/thoR-89",
+        "created_at": "2025-01-16",
+        "confidence": 100
+      },
+      "linkedin": null,
+      "leetcode": null,
+      "hackerrank": null,
+      "ai_summary": {
+        "summary_text": "Active Digital Footprint: Candidate identified primarily via GitHub. Technical proficiency detected in Python, HTML. Additional cross-platform indexing recommended for full recruitment verification.",
+        "dev_type": "Software Engineer",
+        "top_languages": [
+          "Python",
+          "HTML"
+        ],
+        "confidence_level": "Possible",
+        "platforms_count": 1
+      },
+      "created_at": "2026-08-04T20:13:07.943531"
+    },
+    "2": {
+      "user_email": "ys3817537@gmail.com",
+      "search_type": "Identity Search",
+      "name": "Sunny Yadav",
+      "college": "Satish Pradhan Dnyansadhana College",
+      "company": "",
+      "city": "Thane",
+      "overall_confidence": 84,
+      "platforms_found": 2,
+      "github": {
+        "platform": "GitHub",
+        "username": "thoR-89",
+        "name": "Sunny Yadav",
+        "bio": "Computer Science student passionate about Cybersecurity.\r\nCurrently building projects in Python and learning SOC operation",
+        "location": "Thane",
+        "company": "",
+        "blog": "",
+        "email": "",
+        "followers": 0,
+        "following": 2,
+        "repositories": 5,
+        "total_stars": 0,
+        "languages": [
+          "Python",
+          "HTML"
+        ],
+        "language_counts": {
+          "HTML": 1,
+          "Python": 3
+        },
+        "top_projects": [
+          {
+            "name": "DevTrace-Ai",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "HTML",
+            "url": "https://github.com/thoR-89/DevTrace-Ai"
+          },
+          {
+            "name": "Password-Security-Analyzer",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "Python",
+            "url": "https://github.com/thoR-89/Password-Security-Analyzer"
+          },
+          {
+            "name": "phishing-detector",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "Python",
+            "url": "https://github.com/thoR-89/phishing-detector"
+          },
+          {
+            "name": "SOC-Automation-Dashboard",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "Python",
+            "url": "https://github.com/thoR-89/SOC-Automation-Dashboard"
+          },
+          {
+            "name": "Filler",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "Other",
+            "url": "https://github.com/thoR-89/Filler"
+          }
+        ],
+        "avatar": "https://avatars.githubusercontent.com/u/195302081?v=4",
+        "profile": "https://github.com/thoR-89",
+        "created_at": "2025-01-16",
+        "confidence": 100
+      },
+      "linkedin": {
+        "platform": "LinkedIn",
+        "name": "Sunny Yadav",
+        "username": "sunny-yadav-a8804441a",
+        "title": "Sunny Yadav - Student at Satish Pradhan Dnyanasadhana ...",
+        "link": "https://in.linkedin.com/in/sunny-yadav-a8804441a",
+        "snippet": "Student at Satish Pradhan Dnyanasadhana College, Thane. Location: 400601. Satish Pradhan Dnyanasadhana College, Thane Bachelor of Science Computer Science 2024 ...",
+        "bio": "Student at Satish Pradhan Dnyanasadhana College, Thane. Location: 400601. Satish Pradhan Dnyanasadhana College, Thane Bachelor of Science Computer Science 2024 ...",
+        "location": "Thane",
+        "company": "",
+        "confidence": 67
+      },
+      "leetcode": null,
+      "hackerrank": null,
+      "ai_summary": {
+        "summary_text": "Active Digital Footprint: Candidate identified primarily via GitHub. Technical proficiency detected in Python, HTML. Additional cross-platform indexing recommended for full recruitment verification.",
+        "dev_type": "Full Stack Engineer",
+        "top_languages": [
+          "Python",
+          "HTML"
+        ],
+        "confidence_level": "Medium",
+        "platforms_count": 2
+      },
+      "created_at": "2026-08-04T20:22:13.637841"
+    },
+    "3": {
+      "user_email": "ys3817537@gmail.com",
+      "search_type": "Identity Search",
+      "name": "Sunny Yadav",
+      "college": "Satish Pradhan Dnyansadhana College",
+      "company": "",
+      "city": "Thane",
+      "overall_confidence": 67,
+      "platforms_found": 1,
+      "github": null,
+      "linkedin": {
+        "platform": "LinkedIn",
+        "name": "Sunny Yadav",
+        "username": "sunny-yadav-a8804441a",
+        "title": "Sunny Yadav - Student at Satish Pradhan Dnyanasadhana ...",
+        "link": "https://in.linkedin.com/in/sunny-yadav-a8804441a",
+        "snippet": "Student at Satish Pradhan Dnyanasadhana College, Thane. Location: 400601. Satish Pradhan Dnyanasadhana College, Thane Bachelor of Science Computer Science 2024 ...",
+        "bio": "Student at Satish Pradhan Dnyanasadhana College, Thane. Location: 400601. Satish Pradhan Dnyanasadhana College, Thane Bachelor of Science Computer Science 2024 ...",
+        "location": "Thane",
+        "company": "",
+        "confidence": 67
+      },
+      "leetcode": null,
+      "hackerrank": null,
+      "ai_summary": {
+        "summary_text": "Active Digital Footprint: Candidate identified primarily via LinkedIn. Technical proficiency detected in Python, JavaScript. Additional cross-platform indexing recommended for full recruitment verification.",
+        "dev_type": "Full Stack Engineer",
+        "top_languages": [],
+        "confidence_level": "Possible",
+        "platforms_count": 1
+      },
+      "created_at": "2026-08-04T20:36:14.997935"
+    },
+    "5": {
+      "user_email": "ys3817537@gmail.com",
+      "search_type": "Identity Search",
+      "name": "Sunny Yadav",
+      "college": "Satish Pradhan Dnyansadhana College",
+      "company": "",
+      "city": "Thane",
+      "overall_confidence": 67,
+      "platforms_found": 1,
+      "github": null,
+      "linkedin": {
+        "platform": "LinkedIn",
+        "name": "Sunny Yadav",
+        "username": "sunny-yadav-a8804441a",
+        "title": "Sunny Yadav - Student at Satish Pradhan Dnyanasadhana ...",
+        "link": "https://in.linkedin.com/in/sunny-yadav-a8804441a",
+        "snippet": "Student at Satish Pradhan Dnyanasadhana College, Thane. Location: 400601. Satish Pradhan Dnyanasadhana College, Thane Bachelor of Science Computer Science 2024 ...",
+        "bio": "Student at Satish Pradhan Dnyanasadhana College, Thane. Location: 400601. Satish Pradhan Dnyanasadhana College, Thane Bachelor of Science Computer Science 2024 ...",
+        "location": "Thane",
+        "company": "",
+        "confidence": 67
+      },
+      "leetcode": null,
+      "hackerrank": null,
+      "ai_summary": {
+        "summary_text": "Active Digital Footprint: Candidate identified primarily via LinkedIn. Technical proficiency detected in Python, JavaScript. Additional cross-platform indexing recommended for full recruitment verification.",
+        "dev_type": "Full Stack Engineer",
+        "top_languages": [],
+        "confidence_level": "Possible",
+        "platforms_count": 1
+      },
+      "created_at": "2026-08-04T20:50:04.452537"
+    },
+    "8": {
+      "user_email": "ys3817537@gmail.com",
+      "search_type": "Identity Search",
+      "name": "Sunny Yadav",
+      "college": "Satish Pradhan Dnyansadhana College",
+      "company": "",
+      "city": "Thane",
+      "overall_confidence": 67,
+      "platforms_found": 1,
+      "github": null,
+      "linkedin": {
+        "platform": "LinkedIn",
+        "name": "Sunny Yadav",
+        "username": "sunny-yadav-a8804441a",
+        "title": "Sunny Yadav - Student at Satish Pradhan Dnyanasadhana ...",
+        "link": "https://in.linkedin.com/in/sunny-yadav-a8804441a",
+        "snippet": "Student at Satish Pradhan Dnyanasadhana College, Thane. Location: 400601. Satish Pradhan Dnyanasadhana College, Thane Bachelor of Science Computer Science 2024 ...",
+        "bio": "Student at Satish Pradhan Dnyanasadhana College, Thane. Location: 400601. Satish Pradhan Dnyanasadhana College, Thane Bachelor of Science Computer Science 2024 ...",
+        "location": "Thane",
+        "company": "",
+        "confidence": 67
+      },
+      "leetcode": null,
+      "hackerrank": null,
+      "ai_summary": {
+        "summary_text": "Active Digital Footprint: Candidate identified primarily via LinkedIn. Technical proficiency detected in Python, JavaScript. Additional cross-platform indexing recommended for full recruitment verification.",
+        "dev_type": "Full Stack Engineer",
+        "top_languages": [],
+        "confidence_level": "Possible",
+        "platforms_count": 1
+      },
+      "created_at": "2026-08-04T20:58:19.121509"
+    },
+    "9": {
+      "user_email": "ys3817537@gmail.com",
+      "search_type": "Identity Search",
+      "name": "Sunny Yadav",
+      "college": "Satish Pradhan Dnyansadhana College",
+      "company": "",
+      "city": "Thane",
+      "overall_confidence": 67,
+      "platforms_found": 1,
+      "github": null,
+      "linkedin": {
+        "platform": "LinkedIn",
+        "name": "Sunny Yadav",
+        "username": "sunny-yadav-a8804441a",
+        "title": "Sunny Yadav - Student at Satish Pradhan Dnyanasadhana ...",
+        "link": "https://in.linkedin.com/in/sunny-yadav-a8804441a",
+        "snippet": "Student at Satish Pradhan Dnyanasadhana College, Thane. Location: 400601. Satish Pradhan Dnyanasadhana College, Thane Bachelor of Science Computer Science 2024 ...",
+        "bio": "Student at Satish Pradhan Dnyanasadhana College, Thane. Location: 400601. Satish Pradhan Dnyanasadhana College, Thane Bachelor of Science Computer Science 2024 ...",
+        "location": "Thane",
+        "company": "",
+        "confidence": 67
+      },
+      "leetcode": null,
+      "hackerrank": null,
+      "ai_summary": {
+        "summary_text": "Active Digital Footprint: Candidate identified primarily via LinkedIn. Technical proficiency detected in Python, JavaScript. Additional cross-platform indexing recommended for full recruitment verification.",
+        "dev_type": "Full Stack Engineer",
+        "top_languages": [],
+        "confidence_level": "Possible",
+        "platforms_count": 1
+      },
+      "created_at": "2026-08-04T21:09:08.617824"
+    },
+    "10": {
+      "user_email": "ys3817537@gmail.com",
+      "search_type": "Identity Search",
+      "name": "Sunny Yadav",
+      "college": "Satish Pradhan Dnyansadhana College",
+      "company": "",
+      "city": "Thane",
+      "overall_confidence": 84,
+      "platforms_found": 2,
+      "github": {
+        "platform": "GitHub",
+        "username": "thoR-89",
+        "name": "Sunny Yadav",
+        "bio": "Computer Science student passionate about Cybersecurity.\r\nCurrently building projects in Python and learning SOC operation",
+        "location": "Thane",
+        "company": "",
+        "blog": "",
+        "email": "",
+        "followers": 0,
+        "following": 2,
+        "repositories": 5,
+        "total_stars": 0,
+        "languages": [
+          "Python",
+          "HTML"
+        ],
+        "language_counts": {
+          "HTML": 1,
+          "Python": 3
+        },
+        "top_projects": [
+          {
+            "name": "DevTrace-Ai",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "HTML",
+            "url": "https://github.com/thoR-89/DevTrace-Ai"
+          },
+          {
+            "name": "Password-Security-Analyzer",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "Python",
+            "url": "https://github.com/thoR-89/Password-Security-Analyzer"
+          },
+          {
+            "name": "phishing-detector",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "Python",
+            "url": "https://github.com/thoR-89/phishing-detector"
+          },
+          {
+            "name": "SOC-Automation-Dashboard",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "Python",
+            "url": "https://github.com/thoR-89/SOC-Automation-Dashboard"
+          },
+          {
+            "name": "Filler",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "Other",
+            "url": "https://github.com/thoR-89/Filler"
+          }
+        ],
+        "avatar": "https://avatars.githubusercontent.com/u/195302081?v=4",
+        "profile": "https://github.com/thoR-89",
+        "created_at": "2025-01-16",
+        "confidence": 100
+      },
+      "linkedin": {
+        "platform": "LinkedIn",
+        "name": "Sunny Yadav",
+        "username": "sunny-yadav-a8804441a",
+        "title": "Sunny Yadav - Student at Satish Pradhan Dnyanasadhana ...",
+        "link": "https://in.linkedin.com/in/sunny-yadav-a8804441a",
+        "snippet": "Student at Satish Pradhan Dnyanasadhana College, Thane. Location: 400601. Satish Pradhan Dnyanasadhana College, Thane Bachelor of Science Computer Science 2024 ...",
+        "bio": "Student at Satish Pradhan Dnyanasadhana College, Thane. Location: 400601. Satish Pradhan Dnyanasadhana College, Thane Bachelor of Science Computer Science 2024 ...",
+        "location": "Thane",
+        "company": "",
+        "confidence": 67
+      },
+      "leetcode": null,
+      "hackerrank": null,
+      "ai_summary": {
+        "summary_text": "Active Digital Footprint: Candidate identified primarily via GitHub. Technical proficiency detected in Python, HTML. Additional cross-platform indexing recommended for full recruitment verification.",
+        "dev_type": "Full Stack Engineer",
+        "top_languages": [
+          "Python",
+          "HTML"
+        ],
+        "confidence_level": "Medium",
+        "platforms_count": 2
+      },
+      "created_at": "2026-08-04T21:16:55.735246"
+    },
+    "11": {
+      "user_email": "ys3817537@gmail.com",
+      "search_type": "Identity Search",
+      "name": "Krishna Nikam",
+      "college": "A P Shah  Institute of Technology",
+      "company": "",
+      "city": "Thane",
+      "overall_confidence": 86,
+      "platforms_found": 2,
+      "github": {
+        "platform": "GitHub",
+        "username": "nikamkrishna055-coder",
+        "name": "Krishna Vijay Nikam ",
+        "bio": "Aspiring Software Engineer | Python | Full Stack Development | Flutter | Open to Opportunities",
+        "location": "Mumbai ",
+        "company": "",
+        "blog": "",
+        "email": "",
+        "followers": 5,
+        "following": 8,
+        "repositories": 7,
+        "total_stars": 1,
+        "languages": [
+          "Dart",
+          "Python",
+          "TypeScript",
+          "JavaScript"
+        ],
+        "language_counts": {
+          "Python": 1,
+          "TypeScript": 1,
+          "JavaScript": 1,
+          "Dart": 2
+        },
+        "top_projects": [
+          {
+            "name": "Gst-billing",
+            "description": "The GST Billing  Application is a business management system built using Flutter and Firebase. It allows users to manage clients, products, and invoices while automatically calculating GST (CGST, SGST, IGST). The system supports multi-company management and provides secure cloud-based data storage with real-time updates.",
+            "stars": 1,
+            "forks": 0,
+            "language": "Dart",
+            "url": "https://github.com/nikamkrishna055-coder/Gst-billing"
+          },
+          {
+            "name": "ci-demo-app",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "Python",
+            "url": "https://github.com/nikamkrishna055-coder/ci-demo-app"
+          },
+          {
+            "name": "data-science-portfolio",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "TypeScript",
+            "url": "https://github.com/nikamkrishna055-coder/data-science-portfolio"
+          },
+          {
+            "name": "DEV-Experiment2",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "Other",
+            "url": "https://github.com/nikamkrishna055-coder/DEV-Experiment2"
+          },
+          {
+            "name": "movie-explorer",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "JavaScript",
+            "url": "https://github.com/nikamkrishna055-coder/movie-explorer"
+          }
+        ],
+        "avatar": "https://avatars.githubusercontent.com/u/252836820?v=4",
+        "profile": "https://github.com/nikamkrishna055-coder",
+        "created_at": "2026-01-04",
+        "confidence": 100
+      },
+      "linkedin": {
+        "platform": "LinkedIn",
+        "name": "Krishna Nikam",
+        "username": "krishna-nikam-501aa2323",
+        "title": "Krishna Nikam - Aspiring Software Engineer | Python",
+        "link": "https://in.linkedin.com/in/krishna-nikam-501aa2323",
+        "snippet": "View Krishna Nikam's profile on LinkedIn, a professional community of 1 billion members ... A. P. Shah Institute of Technology, Thane Graphic. A. P. Shah ...",
+        "bio": "View Krishna Nikam's profile on LinkedIn, a professional community of 1 billion members ... A. P. Shah Institute of Technology, Thane Graphic. A. P. Shah ...",
+        "location": "Thane",
+        "company": "",
+        "confidence": 71
+      },
+      "leetcode": null,
+      "hackerrank": null,
+      "ai_summary": {
+        "summary_text": "Active Digital Footprint: Candidate identified primarily via GitHub. Technical proficiency detected in Dart, Python, TypeScript, JavaScript. Additional cross-platform indexing recommended for full recruitment verification.",
+        "dev_type": "Full Stack Engineer",
+        "top_languages": [
+          "Dart",
+          "Python",
+          "TypeScript",
+          "JavaScript"
+        ],
+        "confidence_level": "Medium",
+        "platforms_count": 2
+      },
+      "created_at": "2026-08-04T21:21:10.832104"
+    },
+    "12": {
+      "user_email": "ys3817537@gmail.com",
+      "search_type": "Identity Search",
+      "name": "Sunny Yadav",
+      "college": "Satish Pradhan Dnyansadhana College",
+      "company": "",
+      "city": "Thane",
+      "overall_confidence": 67,
+      "platforms_found": 1,
+      "github": null,
+      "linkedin": {
+        "platform": "LinkedIn",
+        "name": "Sunny Yadav",
+        "username": "sunny-yadav-a8804441a",
+        "title": "Sunny Yadav - Student at Satish Pradhan Dnyanasadhana ...",
+        "link": "https://in.linkedin.com/in/sunny-yadav-a8804441a",
+        "snippet": "Student at Satish Pradhan Dnyanasadhana College, Thane. Location: 400601. Satish Pradhan Dnyanasadhana College, Thane Bachelor of Science Computer Science 2024 ...",
+        "bio": "Student at Satish Pradhan Dnyanasadhana College, Thane. Location: 400601. Satish Pradhan Dnyanasadhana College, Thane Bachelor of Science Computer Science 2024 ...",
+        "location": "Thane",
+        "company": "",
+        "confidence": 67
+      },
+      "leetcode": null,
+      "hackerrank": null,
+      "ai_summary": {
+        "summary_text": "Active Digital Footprint: Candidate identified primarily via LinkedIn. Technical proficiency detected in Python, JavaScript. Additional cross-platform indexing recommended for full recruitment verification.",
+        "dev_type": "Full Stack Engineer",
+        "top_languages": [],
+        "confidence_level": "Possible",
+        "platforms_count": 1
+      },
+      "created_at": "2026-08-04T21:36:07.025036"
+    },
+    "13": {
+      "user_email": "ys3817537@gmail.com",
+      "search_type": "Identity Search",
+      "name": "Sunny Yadav",
+      "college": "Satish Pradhan Dnyansadhana College",
+      "company": "",
+      "city": "Thane",
+      "overall_confidence": 67,
+      "platforms_found": 1,
+      "github": null,
+      "linkedin": {
+        "platform": "LinkedIn",
+        "name": "Sunny Yadav",
+        "username": "sunny-yadav-a8804441a",
+        "title": "Sunny Yadav - Student at Satish Pradhan Dnyanasadhana ...",
+        "link": "https://in.linkedin.com/in/sunny-yadav-a8804441a",
+        "snippet": "Student at Satish Pradhan Dnyanasadhana College, Thane. Location: 400601. Satish Pradhan Dnyanasadhana College, Thane Bachelor of Science Computer Science 2024 ...",
+        "bio": "Student at Satish Pradhan Dnyanasadhana College, Thane. Location: 400601. Satish Pradhan Dnyanasadhana College, Thane Bachelor of Science Computer Science 2024 ...",
+        "location": "Thane",
+        "company": "",
+        "confidence": 67
+      },
+      "leetcode": null,
+      "hackerrank": null,
+      "ai_summary": {
+        "summary_text": "Active Digital Footprint: Candidate identified primarily via LinkedIn. Technical proficiency detected in Python, JavaScript. Additional cross-platform indexing recommended for full recruitment verification.",
+        "dev_type": "Full Stack Engineer",
+        "top_languages": [],
+        "confidence_level": "Possible",
+        "platforms_count": 1
+      },
+      "created_at": "2026-08-04T21:40:29.141017"
+    },
+    "14": {
+      "user_email": "ys3817537@gmail.com",
+      "search_type": "Identity Search",
+      "name": "Sunny Yadav",
+      "college": "Satish Pradhan Dnyansadhana College",
+      "company": "",
+      "city": "Thane",
+      "overall_confidence": 84,
+      "platforms_found": 2,
+      "github": {
+        "platform": "GitHub",
+        "username": "thoR-89",
+        "name": "thoR-89",
+        "bio": "",
+        "location": "",
+        "company": "",
+        "blog": "",
+        "email": "",
+        "followers": 0,
+        "following": 0,
+        "repositories": 0,
+        "total_stars": 0,
+        "languages": [],
+        "language_counts": {},
+        "top_projects": [],
+        "avatar": null,
+        "profile": "https://github.com/thoR-89",
+        "created_at": "",
+        "confidence": 100
+      },
+      "linkedin": {
+        "platform": "LinkedIn",
+        "name": "Sunny Yadav",
+        "username": "sunny-yadav-a8804441a",
+        "title": "Sunny Yadav - Student at Satish Pradhan Dnyanasadhana ...",
+        "link": "https://in.linkedin.com/in/sunny-yadav-a8804441a",
+        "snippet": "Student at Satish Pradhan Dnyanasadhana College, Thane. Location: 400601. Satish Pradhan Dnyanasadhana College, Thane Bachelor of Science Computer Science 2024 ...",
+        "bio": "Student at Satish Pradhan Dnyanasadhana College, Thane. Location: 400601. Satish Pradhan Dnyanasadhana College, Thane Bachelor of Science Computer Science 2024 ...",
+        "location": "Thane",
+        "company": "",
+        "confidence": 67
+      },
+      "leetcode": null,
+      "hackerrank": null,
+      "ai_summary": {
+        "summary_text": "Active Digital Footprint: Candidate identified primarily via GitHub. Technical proficiency detected in Python, JavaScript. Additional cross-platform indexing recommended for full recruitment verification.",
+        "dev_type": "Full Stack Engineer",
+        "top_languages": [],
+        "confidence_level": "Medium",
+        "platforms_count": 2
+      },
+      "created_at": "2026-08-04T21:53:41.364981"
+    },
+    "15": {
+      "user_email": "ys3817537@gmail.com",
+      "search_type": "Identity Search",
+      "name": "Sunny Yadav",
+      "college": "Satish Pradhan Dnyansadhana College",
+      "company": "",
+      "city": "Thane",
+      "overall_confidence": 84,
+      "platforms_found": 2,
+      "github": {
+        "platform": "GitHub",
+        "username": "thoR-89",
+        "name": "thoR-89",
+        "bio": "",
+        "location": "",
+        "company": "",
+        "blog": "",
+        "email": "",
+        "followers": 0,
+        "following": 0,
+        "repositories": 0,
+        "total_stars": 0,
+        "languages": [],
+        "language_counts": {},
+        "top_projects": [],
+        "avatar": null,
+        "profile": "https://github.com/thoR-89",
+        "created_at": "",
+        "confidence": 100
+      },
+      "linkedin": {
+        "platform": "LinkedIn",
+        "name": "Sunny Yadav",
+        "username": "sunny-yadav-a8804441a",
+        "title": "Sunny Yadav - Student at Satish Pradhan Dnyanasadhana ...",
+        "link": "https://in.linkedin.com/in/sunny-yadav-a8804441a",
+        "snippet": "Student at Satish Pradhan Dnyanasadhana College, Thane. Location: 400601. Satish Pradhan Dnyanasadhana College, Thane Bachelor of Science Computer Science 2024 ...",
+        "bio": "Student at Satish Pradhan Dnyanasadhana College, Thane. Location: 400601. Satish Pradhan Dnyanasadhana College, Thane Bachelor of Science Computer Science 2024 ...",
+        "location": "Thane",
+        "company": "",
+        "confidence": 67
+      },
+      "leetcode": null,
+      "hackerrank": null,
+      "ai_summary": {
+        "summary_text": "Active Digital Footprint: Candidate identified primarily via GitHub. Technical proficiency detected in Python, JavaScript. Additional cross-platform indexing recommended for full recruitment verification.",
+        "dev_type": "Full Stack Engineer",
+        "top_languages": [],
+        "confidence_level": "Medium",
+        "platforms_count": 2
+      },
+      "created_at": "2026-08-04T21:55:42.679889"
+    },
+    "16": {
+      "user_email": "ys3817537@gmail.com",
+      "search_type": "Identity Search",
+      "name": "Sunny Yadav",
+      "college": "Satish Pradhan Dnyansadhana College",
+      "company": "",
+      "city": "Thane",
+      "overall_confidence": 84,
+      "platforms_found": 2,
+      "github": {
+        "platform": "GitHub",
+        "username": "thoR-89",
+        "name": "Sunny Yadav",
+        "bio": "Computer Science student passionate about Cybersecurity.\r\nCurrently building projects in Python and learning SOC operation",
+        "location": "Thane",
+        "company": "",
+        "blog": "",
+        "email": "",
+        "followers": 0,
+        "following": 2,
+        "repositories": 5,
+        "total_stars": 0,
+        "languages": [
+          "Python",
+          "HTML"
+        ],
+        "language_counts": {
+          "HTML": 1,
+          "Python": 3
+        },
+        "top_projects": [
+          {
+            "name": "DevTrace-Ai",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "HTML",
+            "url": "https://github.com/thoR-89/DevTrace-Ai"
+          },
+          {
+            "name": "Password-Security-Analyzer",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "Python",
+            "url": "https://github.com/thoR-89/Password-Security-Analyzer"
+          },
+          {
+            "name": "phishing-detector",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "Python",
+            "url": "https://github.com/thoR-89/phishing-detector"
+          },
+          {
+            "name": "SOC-Automation-Dashboard",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "Python",
+            "url": "https://github.com/thoR-89/SOC-Automation-Dashboard"
+          },
+          {
+            "name": "Filler",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "Other",
+            "url": "https://github.com/thoR-89/Filler"
+          }
+        ],
+        "avatar": "https://avatars.githubusercontent.com/u/195302081?v=4",
+        "profile": "https://github.com/thoR-89",
+        "created_at": "2025-01-16",
+        "confidence": 100
+      },
+      "linkedin": {
+        "platform": "LinkedIn",
+        "name": "Sunny Yadav",
+        "username": "sunny-yadav-a8804441a",
+        "title": "Sunny Yadav - Student at Satish Pradhan Dnyanasadhana ...",
+        "link": "https://in.linkedin.com/in/sunny-yadav-a8804441a",
+        "snippet": "Student at Satish Pradhan Dnyanasadhana College, Thane. Location: 400601. Satish Pradhan Dnyanasadhana College, Thane Bachelor of Science Computer Science 2024 ...",
+        "bio": "Student at Satish Pradhan Dnyanasadhana College, Thane. Location: 400601. Satish Pradhan Dnyanasadhana College, Thane Bachelor of Science Computer Science 2024 ...",
+        "location": "Thane",
+        "company": "",
+        "confidence": 67
+      },
+      "leetcode": null,
+      "hackerrank": null,
+      "ai_summary": {
+        "summary_text": "Active Digital Footprint: Candidate identified primarily via GitHub. Technical proficiency detected in Python, HTML. Additional cross-platform indexing recommended for full recruitment verification.",
+        "dev_type": "Full Stack Engineer",
+        "top_languages": [
+          "Python",
+          "HTML"
+        ],
+        "confidence_level": "Medium",
+        "platforms_count": 2
+      },
+      "created_at": "2026-08-05T10:01:01.493196"
+    },
+    "17": {
+      "user_email": "ys3817537@gmail.com",
+      "search_type": "Identity Search",
+      "name": "Sunny Yadav",
+      "college": "Satish Pradhan Dnyansadhana College",
+      "company": "",
+      "city": "Thane",
+      "overall_confidence": 84,
+      "platforms_found": 2,
+      "github": {
+        "platform": "GitHub",
+        "username": "thoR-89",
+        "name": "Sunny Yadav",
+        "bio": "Computer Science student passionate about Cybersecurity.\r\nCurrently building projects in Python and learning SOC operation",
+        "location": "Thane",
+        "company": "",
+        "blog": "",
+        "email": "",
+        "followers": 0,
+        "following": 2,
+        "repositories": 5,
+        "total_stars": 0,
+        "languages": [
+          "Python",
+          "HTML"
+        ],
+        "language_counts": {
+          "HTML": 1,
+          "Python": 3
+        },
+        "top_projects": [
+          {
+            "name": "DevTrace-Ai",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "HTML",
+            "url": "https://github.com/thoR-89/DevTrace-Ai"
+          },
+          {
+            "name": "Password-Security-Analyzer",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "Python",
+            "url": "https://github.com/thoR-89/Password-Security-Analyzer"
+          },
+          {
+            "name": "phishing-detector",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "Python",
+            "url": "https://github.com/thoR-89/phishing-detector"
+          },
+          {
+            "name": "SOC-Automation-Dashboard",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "Python",
+            "url": "https://github.com/thoR-89/SOC-Automation-Dashboard"
+          },
+          {
+            "name": "Filler",
+            "description": "No description provided",
+            "stars": 0,
+            "forks": 0,
+            "language": "Other",
+            "url": "https://github.com/thoR-89/Filler"
+          }
+        ],
+        "avatar": "https://avatars.githubusercontent.com/u/195302081?v=4",
+        "profile": "https://github.com/thoR-89",
+        "created_at": "2025-01-16",
+        "confidence": 100
+      },
+      "linkedin": {
+        "platform": "LinkedIn",
+        "name": "Sunny Yadav",
+        "username": "sunny-yadav-a8804441a",
+        "title": "Sunny Yadav - Student at Satish Pradhan Dnyanasadhana ...",
+        "link": "https://in.linkedin.com/in/sunny-yadav-a8804441a",
+        "snippet": "Student at Satish Pradhan Dnyanasadhana College, Thane. Location: 400601. Satish Pradhan Dnyanasadhana College, Thane Bachelor of Science Computer Science 2024 ...",
+        "bio": "Student at Satish Pradhan Dnyanasadhana College, Thane. Location: 400601. Satish Pradhan Dnyanasadhana College, Thane Bachelor of Science Computer Science 2024 ...",
+        "location": "Thane",
+        "company": "",
+        "confidence": 67
+      },
+      "leetcode": null,
+      "hackerrank": null,
+      "ai_summary": {
+        "summary_text": "Active Digital Footprint: Candidate identified primarily via GitHub. Technical proficiency detected in Python, HTML. Additional cross-platform indexing recommended for full recruitment verification.",
+        "dev_type": "Full Stack Engineer",
+        "top_languages": [
+          "Python",
+          "HTML"
+        ],
+        "confidence_level": "Medium",
+        "platforms_count": 2
+      },
+      "created_at": "2026-08-05T21:43:27.269850"
+    }
+  }
+}

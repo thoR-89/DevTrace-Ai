@@ -4,7 +4,7 @@ from services.serpapi_client import SerpAPIClient
 client = SerpAPIClient()
 
 
-def search_leetcode(name, college="", city=""):
+def search_leetcode(name, college="", city="", company=""):
     """
     Search LeetCode candidate profiles using SerpAPI Google Search indexing.
     Extracts LeetCode username, ranking, solved count if available in snippet.
@@ -13,7 +13,12 @@ def search_leetcode(name, college="", city=""):
     if not clean_name:
         return []
 
-    query = f'"{clean_name}" site:leetcode.com/u/ OR site:leetcode.com/'.strip()
+    query_parts = [f'"{clean_name}"', "site:leetcode.com/u/ OR site:leetcode.com/"]
+    for value in [company, college, city]:
+        if value:
+            query_parts.append(f'"{value}"')
+
+    query = " ".join(query_parts).strip()
     data = client.search(query, num_results=10)
 
     if not data:
@@ -29,7 +34,6 @@ def search_leetcode(name, college="", city=""):
         if "leetcode.com/" not in clean_link.lower() or clean_link in seen_links:
             continue
 
-        # Skip non-profile pages like /problems/ or /discuss/
         if any(x in clean_link.lower() for x in ["/problems/", "/discuss/", "/contest/", "/tag/"]):
             continue
 
@@ -37,7 +41,6 @@ def search_leetcode(name, college="", city=""):
         title = result.get("title", "").replace(" - LeetCode", "")
         snippet = result.get("snippet", "")
 
-        # Extract handle
         match = re.search(r"leetcode\.com/(?:u/)?([a-zA-Z0-9_-]+)", clean_link)
         username = match.group(1) if match else clean_name.lower().replace(" ", "")
 
@@ -48,7 +51,9 @@ def search_leetcode(name, college="", city=""):
             "title": title,
             "link": clean_link,
             "snippet": snippet,
-            "bio": snippet
+            "bio": snippet,
+            "location": city,
+            "company": company,
         })
 
     return profiles

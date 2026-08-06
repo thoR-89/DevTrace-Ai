@@ -2,6 +2,34 @@
    AUTH PAGES — SPLIT LAYOUT (Login & Register)
    ============================================================ */
 
+.auth-brand-logo {
+  font-size: 1.95rem;
+}
+.auth-brand-headline {
+  font-size: clamp(2.4rem, 3.5vw, 3.2rem);
+}
+.auth-brand-sub {
+  font-size: 1.05rem;
+}
+.auth-features-list li {
+  font-size: 1rem;
+}
+.auth-header h2 {
+  font-size: 2.15rem;
+}
+.auth-header p {
+  font-size: 1rem;
+}
+.auth-submit-btn {
+  font-size: 1.05rem;
+}
+.auth-footer {
+  font-size: 0.97rem;
+}
+.auth-divider {
+  font-size: 0.9rem;
+}
+
 .auth-page {
   min-height: 100vh;
   display: flex;

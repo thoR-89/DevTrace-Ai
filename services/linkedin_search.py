@@ -4,7 +4,7 @@ from services.serpapi_client import SerpAPIClient
 client = SerpAPIClient()
 
 
-def search_linkedin(name, college="", city=""):
+def search_linkedin(name, college="", city="", company=""):
     """
     Search LinkedIn candidate profiles using SerpAPI Google Search indexing.
     Extracts profile link, title headline, snippet description, and location cues.
@@ -14,10 +14,9 @@ def search_linkedin(name, college="", city=""):
         return []
 
     query_parts = [f'"{clean_name}"', "site:linkedin.com/in/"]
-    if college:
-        query_parts.append(f'"{college}"')
-    if city:
-        query_parts.append(f'"{city}"')
+    for value in [company, college, city]:
+        if value:
+            query_parts.append(f'"{value}"')
 
     query = " ".join(query_parts)
     data = client.search(query, num_results=10)
@@ -39,7 +38,6 @@ def search_linkedin(name, college="", city=""):
         title = result.get("title", "").replace(" - LinkedIn", "").replace(" | LinkedIn", "")
         snippet = result.get("snippet", "")
 
-        # Extract handle from link
         match = re.search(r"linkedin\.com/in/([a-zA-Z0-9_-]+)", clean_link)
         username = match.group(1) if match else clean_name.lower().replace(" ", "")
 
@@ -50,7 +48,9 @@ def search_linkedin(name, college="", city=""):
             "title": title,
             "link": clean_link,
             "snippet": snippet,
-            "bio": snippet
+            "bio": snippet,
+            "location": city,
+            "company": company,
         })
 
     return profiles

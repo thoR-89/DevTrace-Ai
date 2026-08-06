@@ -17,43 +17,49 @@ def extract_username(url):
     match = re.search(r"github\.com/([a-zA-Z0-9_-]+)", url)
     if match:
         username = match.group(1).strip()
-        # Filter out system paths
         if username.lower() not in ["features", "topics", "collections", "trending", "pricing", "login", "signup", "about"]:
             return username
     return None
 
 
-def search_github(name, college="", city=""):
+def search_github(name, college="", city="", company="", github_username=""):
     """
-    Intelligently discover GitHub candidates by name, location, and institution keywords.
-    Deduplicates candidates and retrieves rich GitHub profile details.
+    Search GitHub using the GitHub username only when provided.
+    If no username is provided, fall back to a name-based search.
     """
     profiles = []
     seen_usernames = set()
 
     clean_name = str(name).strip()
+    clean_username = str(github_username or "").strip()
+
+    if clean_username:
+        profile = get_github_profile(clean_username)
+        if profile:
+            profiles.append(profile)
+        return profiles
+
     if not clean_name:
         return profiles
 
-    # ---------------------------------------------
-    # Method 1: GitHub REST Search API
-    # ---------------------------------------------
     try:
+        search_terms = [clean_name, company, college, city]
+        enriched_terms = [part for part in search_terms if part]
         search_queries = [
             f"{clean_name} in:name",
-            f"{clean_name} {city}".strip(),
-            f"{clean_name} {college}".strip()
+            " ".join(enriched_terms),
+            f"{clean_name} developer {' '.join(enriched_terms[1:])}".strip(),
+            f"{clean_name} software engineer {' '.join(enriched_terms[1:])}".strip(),
         ]
 
         for q in search_queries:
             if len(seen_usernames) >= Config.MAX_GITHUB_CANDIDATES:
                 break
-
             response = requests.get(
                 GITHUB_SEARCH_API,
                 params={"q": q, "per_page": 10},
                 headers=_headers(),
-                timeout=10
+                timeout=10,
             )
 
             if response.status_code == 200:
@@ -71,13 +77,10 @@ def search_github(name, college="", city=""):
     except Exception as e:
         print(f"[!] GitHub Search API Exception: {e}", file=sys.stderr)
 
-    # ---------------------------------------------
-    # Method 2: SerpAPI Fallback / Supplement
-    # ---------------------------------------------
     if len(profiles) < 3 and Config.SERPAPI_KEY:
         try:
             serp = SerpAPIClient()
-            google_query = f'site:github.com "{clean_name}" {college} {city}'.strip()
+            google_query = " ".join(filter(None, [f'"{clean_name}"', company, college, city, "site:github.com"])).strip()
             result = serp.search(google_query, num_results=10)
 
             if result:
